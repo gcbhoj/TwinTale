@@ -261,46 +261,8 @@
                     <view key="view" contentMode="scaleToFill" id="x5W-AD-FwD">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vfl-aB-ZPr">
-                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Rp-FD-gIl">
-                                        <rect key="frame" x="0.0" y="20" width="393" height="646"/>
-                                        <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MOo-4j-Wqg">
-                                                <rect key="frame" x="17" y="17" width="359" height="716"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
-                                                <color key="textColor" systemColor="labelColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.5490196078431373" green="0.83137254901960778" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="2Rp-FD-gIl" firstAttribute="leading" secondItem="c8P-3n-wCH" secondAttribute="leading" id="ErH-t5-Wzn"/>
-                                    <constraint firstItem="2Rp-FD-gIl" firstAttribute="top" secondItem="c8P-3n-wCH" secondAttribute="top" constant="20" id="HwB-gM-tdh"/>
-                                    <constraint firstItem="2Rp-FD-gIl" firstAttribute="trailing" secondItem="c8P-3n-wCH" secondAttribute="trailing" id="K94-9T-rJk"/>
-                                    <constraint firstItem="2Rp-FD-gIl" firstAttribute="bottom" secondItem="c8P-3n-wCH" secondAttribute="bottom" id="Mw3-3p-Ha7"/>
-                                    <constraint firstItem="2Rp-FD-gIl" firstAttribute="bottom" secondItem="CK6-ye-1jp" secondAttribute="bottom" id="Rw3-nm-Tmc"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="c8P-3n-wCH"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="CK6-ye-1jp"/>
-                            </scrollView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="mBY-IW-gGh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="Vfl-aB-ZPr" firstAttribute="top" secondItem="mBY-IW-gGh" secondAttribute="top" id="P2z-q1-H6I"/>
-                            <constraint firstItem="mBY-IW-gGh" firstAttribute="trailing" secondItem="Vfl-aB-ZPr" secondAttribute="trailing" id="dhJ-Sj-00b"/>
-                            <constraint firstItem="mBY-IW-gGh" firstAttribute="bottom" secondItem="Vfl-aB-ZPr" secondAttribute="bottom" id="md8-XN-jaB"/>
-                            <constraint firstItem="Vfl-aB-ZPr" firstAttribute="leading" secondItem="mBY-IW-gGh" secondAttribute="leading" id="tnD-cA-USB"/>
-                            <constraint firstItem="2Rp-FD-gIl" firstAttribute="width" secondItem="x5W-AD-FwD" secondAttribute="width" id="zna-T1-VwP"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5dp-Da-ZBk"/>
                 </viewController>
@@ -794,7 +756,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="53X-im-Cfa"/>
+        <segue reference="375-ZD-RkI"/>
         <segue reference="SMt-Mo-abS"/>
     </inferredMetricsTieBreakers>
     <resources>
