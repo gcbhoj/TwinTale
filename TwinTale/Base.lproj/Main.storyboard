@@ -22,7 +22,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oTD-Mf-pJh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-501" y="177"/>
+            <point key="canvasLocation" x="425.19083969465646" y="176.7605633802817"/>
         </scene>
         <!--Item 1-->
         <scene sceneID="Kcb-DY-jbB">
@@ -38,7 +38,77 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5b6-cs-Izm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-501" y="-430"/>
+            <point key="canvasLocation" x="425.19083969465646" y="-430.28169014084511"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="cDG-HZ-aRv">
+            <objects>
+                <viewController id="GRm-a4-xuJ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Ai-Gd-xWS">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Cover Page" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W25-qW-tFD">
+                                <rect key="frame" x="100" y="280" width="187" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="e1x-LH-LRc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="a2O-YU-eJ1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GgV-HW-Uyd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3866.4122137404579" y="-349.29577464788736"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="g2w-rj-ZHP">
+            <objects>
+                <viewController id="lVg-hr-zZt" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vfZ-r0-rLo">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Regiistration page" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WOw-q3-BJU">
+                                <rect key="frame" x="112" y="310" width="191" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="4rk-jT-C8K"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="trv-4S-bwn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3127.4809160305344" y="-342.25352112676057"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="NUA-FO-yvO">
+            <objects>
+                <viewController id="HQV-8L-kM5" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DnN-w8-mBB">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Login page" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="umT-wf-1hJ">
+                                <rect key="frame" x="94" y="349" width="229" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="0dh-jl-Bmy"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nLd-WG-W4R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2272.5190839694656" y="-336.61971830985919"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Dle-M2-4nI">
@@ -56,7 +126,25 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RkV-n9-Tpz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1407" y="-127"/>
+            <point key="canvasLocation" x="-617.55725190839689" y="-5.6338028169014089"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vIT-2o-gBp">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fai-9G-MV4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vKj-hq-eNn">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GRm-a4-xuJ" kind="relationship" relationship="rootViewController" id="5vQ-sp-X6L"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tGG-Kw-sQ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4793.1297709923665" y="-349.29577464788736"/>
         </scene>
     </scenes>
     <resources>
