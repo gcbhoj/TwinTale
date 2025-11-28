@@ -1,5 +1,5 @@
 //
-//  ScoreboardTableViewController.swift
+//  LeaderboardTableViewController.swift
 //  TwinTale
 //
 //  Created by Default User on 11/28/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ScoreboardTableViewController: UITableViewController {
+class LeaderboardTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,16 +33,21 @@ class ScoreboardTableViewController: UITableViewController {
         nameLabel.text = "Name"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
 
+        let medalImage = UIImageView(image: UIImage(named: "MedalIcon"))
+        medalImage.contentMode = .scaleAspectFit
+        medalImage.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        medalImage.heightAnchor.constraint(equalToConstant: 24).isActive = true
+
         let coinImage = UIImageView(image: UIImage(named: "Coins"))
         coinImage.contentMode = .scaleAspectFit
         coinImage.widthAnchor.constraint(equalToConstant: 24).isActive = true
         coinImage.heightAnchor.constraint(equalToConstant: 24).isActive = true
 
         // --- Stack View ---
-        let stack = UIStackView(arrangedSubviews: [rankLabel, nameLabel, coinImage])
+        let stack = UIStackView(arrangedSubviews: [rankLabel, nameLabel, medalImage, coinImage])
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.distribution = .equalSpacing   
+        stack.distribution = .equalSpacing
         stack.translatesAutoresizingMaskIntoConstraints = false
 
         headerView.addSubview(stack)
@@ -71,7 +76,7 @@ class ScoreboardTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ScoreBoardTabViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LeaderBoardTableViewCell", for: indexPath)
 
         // Configure the cell...
 
@@ -79,9 +84,7 @@ class ScoreboardTableViewController: UITableViewController {
     }
     
 
-    
-
-    
+   
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
