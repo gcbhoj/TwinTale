@@ -1,5 +1,5 @@
 //
-//  LeaderBoardTableViewCell.swift
+//  LeaderboardTableViewCell.swift
 //  TwinTale
 //
 //  Created by Default User on 11/28/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LeaderBoardTableViewCell: UITableViewCell {
+class LeaderboardTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
