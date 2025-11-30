@@ -9,6 +9,7 @@ import UIKit
 
 class TestingTableViewController: UITableViewController {
     
+    // MARK: - Message Model
     struct Message {
         let sender: String
         let text: String
@@ -17,30 +18,75 @@ class TestingTableViewController: UITableViewController {
     var messages: [Message] = [
         Message(sender: "You", text: "True friends stay by your side when you need them most."),
         Message(sender: "Friend", text: "Absolutely! That's what friends are for."),
-        Message(sender:"Jack", text:"Hello HOw are You?")
+        Message(sender: "Jack", text: "Hello, how are you?")
     ]
+    
+    // MARK: - Timer
+    var timerLabel: UITextField!
+    var countdownTimer: Timer?
+    var remainingSeconds = 24 * 60 * 60   // 24 hours
 
+    // MARK: - Footer References
+    var inputField: UITextField!
+    var sendButton: UIButton!
+    var completeStoryButton: UIButton!
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestingTableViewCell")
+        tableView.separatorStyle = .none
+        startTimer()
+    }
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    // MARK: - Timer Functions
+    func startTimer() {
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1.0,
+                                              target: self,
+                                              selector: #selector(updateTimer),
+                                              userInfo: nil,
+                                              repeats: true)
     }
     
+    @objc func updateTimer() {
+        if remainingSeconds > 0 {
+            remainingSeconds -= 1
+            timerLabel.text = formatTime(remainingSeconds)
+        } else {
+            countdownTimer?.invalidate()
+            timerLabel.text = "00:00:00"
+            
+            // Disable input when timer ends
+            inputField.isEnabled = false
+            sendButton.isEnabled = false
+            completeStoryButton.isEnabled = false
+            
+            // Automatically navigate to next page
+            performSegue(withIdentifier: "goToScoreBoard", sender: self)
+        }
+    }
+    
+    func formatTime(_ seconds: Int) -> String {
+        let hrs = seconds / 3600
+        let mins = (seconds % 3600) / 60
+        let secs = seconds % 60
+        return String(format: "%02d:%02d:%02d", hrs, mins, secs)
+    }
+
+    // MARK: - TableView Header
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGray6
 
-        // --- Create elements ---
+        // Logo
         let logoImage = UIImageView(image: UIImage(named: "logo"))
         logoImage.contentMode = .scaleAspectFit
         logoImage.widthAnchor.constraint(equalToConstant: 141).isActive = true
         logoImage.heightAnchor.constraint(equalToConstant: 126).isActive = true
 
+        // Category
         let categoryLabel = UILabel()
         categoryLabel.text = "Category"
         categoryLabel.font = UIFont.boldSystemFont(ofSize: 16)
@@ -51,79 +97,159 @@ class TestingTableViewController: UITableViewController {
         
         let categoryStack = UIStackView(arrangedSubviews: [categoryLabel, categoryTypeLabel])
         categoryStack.axis = .horizontal
-        categoryStack.alignment = .center
         categoryStack.distribution = .equalSpacing
-        categoryStack.translatesAutoresizingMaskIntoConstraints = false
         
+        // Time Left
         let timeLabel = UILabel()
         timeLabel.text = "Time Left"
         timeLabel.font = UIFont.boldSystemFont(ofSize: 16)
         
-        let timeLeftDisplay = UITextField()
-        timeLeftDisplay.text = "30:00"
-        timeLeftDisplay.font = UIFont.systemFont(ofSize: 16)
+        timerLabel = UITextField()
+        timerLabel.text = formatTime(remainingSeconds)
+        timerLabel.font = UIFont.systemFont(ofSize: 16)
         
-        let timeDisplayStack = UIStackView(arrangedSubviews: [timeLabel,timeLeftDisplay])
-        timeDisplayStack.axis = .horizontal
-        timeDisplayStack.alignment = .center
-        timeDisplayStack.distribution = .equalSpacing
-        timeDisplayStack.translatesAutoresizingMaskIntoConstraints = false
+        let timeStack = UIStackView(arrangedSubviews: [timeLabel, timerLabel])
+        timeStack.axis = .horizontal
+        timeStack.distribution = .equalSpacing
         
-        let textStack = UIStackView(arrangedSubviews: [categoryStack,timeDisplayStack])
+        let textStack = UIStackView(arrangedSubviews: [categoryStack, timeStack])
         textStack.axis = .vertical
-        textStack.alignment = .center
         textStack.distribution = .equalSpacing
-        textStack.translatesAutoresizingMaskIntoConstraints = false
         
+        let mainStack = UIStackView(arrangedSubviews: [logoImage, textStack])
+        mainStack.axis = .horizontal
+        mainStack.distribution = .equalSpacing
+        mainStack.alignment = .center
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerView.addSubview(mainStack)
 
-        // --- Stack View ---
-        let stack = UIStackView(arrangedSubviews: [logoImage, textStack])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .equalSpacing
-        stack.translatesAutoresizingMaskIntoConstraints = false
-
-        headerView.addSubview(stack)
-
-        // Constraints
         NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-            stack.topAnchor.constraint(equalTo: headerView.topAnchor),
-            stack.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+            mainStack.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            mainStack.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            mainStack.topAnchor.constraint(equalTo: headerView.topAnchor),
+            mainStack.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
         ])
 
         return headerView
     }
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 150
     }
 
+    // MARK: - TableView Footer
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        let footerView = UIView()
+        footerView.backgroundColor = UIColor.systemGray6
+        
+        // Input Field
+        inputField = UITextField()
+        inputField.placeholder = "Enter Your Part..."
+        inputField.borderStyle = .roundedRect
+        inputField.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Send Button
+        sendButton = UIButton(type: .system)
+        sendButton.setTitle("Send", for: .normal)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
+        
+        let inputStack = UIStackView(arrangedSubviews: [inputField, sendButton])
+        inputStack.axis = .horizontal
+        inputStack.spacing = 8
+        inputStack.alignment = .center
+        inputStack.distribution = .fillProportionally
+        
+        // Complete Story Button
+        completeStoryButton = UIButton(type: .system)
+        completeStoryButton.setTitle("Complete Story", for: .normal)
+        completeStoryButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        completeStoryButton.translatesAutoresizingMaskIntoConstraints = false
+        completeStoryButton.addTarget(self, action: #selector(completeTask), for: .touchUpInside)
+        
+        let stack = UIStackView(arrangedSubviews: [inputStack, completeStoryButton])
+        stack.axis = .vertical
+        stack.spacing = 12
+        stack.alignment = .fill
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        footerView.addSubview(stack)
+
+        NSLayoutConstraint.activate([
+            stack.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 16),
+            stack.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -16),
+            stack.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 8),
+            stack.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -8)
+        ])
+
+        return footerView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 120
+    }
+
+    // MARK: - TableView Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return messages.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TestingTableViewCell", for: indexPath)
 
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TestingTableViewCell", for: indexPath)
+        cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+        
+        let msg = messages[indexPath.row]
+
+        // Sender Label
+        let senderLabel = UILabel()
+        senderLabel.text = msg.sender
+        senderLabel.font = UIFont.boldSystemFont(ofSize: 15)
+
+        // Message Label
+        let messageLabel = UILabel()
+        messageLabel.text = msg.text
+        messageLabel.font = UIFont.systemFont(ofSize: 14)
+        messageLabel.numberOfLines = 0
+
+        // Stack
+        let stack = UIStackView(arrangedSubviews: [senderLabel, messageLabel])
+        stack.axis = .vertical
+        stack.spacing = 6
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        cell.contentView.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16),
+            stack.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+            stack.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 12),
+            stack.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor, constant: -12)
+        ])
 
         return cell
     }
-    
- 
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Button Actions
+    @objc func sendMessage() {
+        guard let text = inputField.text, !text.isEmpty else { return }
+        messages.append(Message(sender: "You", text: text))
+        inputField.text = ""
+        tableView.reloadData()
     }
     
+    @objc func completeTask() {
+        // Disable input/buttons
+        inputField.isEnabled = false
+        sendButton.isEnabled = false
+        completeStoryButton.isEnabled = false
+        
+        // Navigate
+        performSegue(withIdentifier: "goToScoreBoard", sender: self)
+    }
 
 }
+
+
