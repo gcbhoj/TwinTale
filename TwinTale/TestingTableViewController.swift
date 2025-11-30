@@ -8,6 +8,17 @@
 import UIKit
 
 class TestingTableViewController: UITableViewController {
+    
+    struct Message {
+        let sender: String
+        let text: String
+    }
+
+    var messages: [Message] = [
+        Message(sender: "You", text: "True friends stay by your side when you need them most."),
+        Message(sender: "Friend", text: "Absolutely! That's what friends are for."),
+        Message(sender:"Jack", text:"Hello HOw are You?")
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +104,7 @@ class TestingTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 10
+        return messages.count
     }
 
     
