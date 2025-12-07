@@ -10,39 +10,62 @@ import FBSDKLoginKit
 
 class ViewController: UIViewController {
     
-    // MARK: - Properties
-    private let loginManager = LoginManager()
+    let loginManager = LoginManager()
     
-    // MARK: - IBOutlets
+    // IBOutlets for UI elements (connect these in storyboard)
     @IBOutlet weak var logoImageView: UIImageView?
     @IBOutlet weak var quoteTextView: UITextView?
     @IBOutlet weak var facebookLoginButton: UIButton?
     @IBOutlet weak var createAccountButton: UIButton?
     @IBOutlet weak var signInButton: UIButton?
-    
-    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupAmazingUI()
         animateEntrance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateGradientFrame()
-    }
-    
-    // MARK: - UI Setup
-    private func setupUI() {
+    // MARK: - Amazing UI Setup
+    private func setupAmazingUI() {
+        // Create stunning gradient background
         setupGradientBackground()
-        setupLogoImageView()
-        setupQuoteTextView()
-        setupButtons()
+        
+        // Style all buttons with premium effects
+        if let fbButton = facebookLoginButton {
+            styleButton(fbButton, withColor: UIColor(red: 0.24, green: 0.35, blue: 0.60, alpha: 1.0), icon: "📘")
+        }
+        
+        if let createButton = createAccountButton {
+            styleButton(createButton, withColor: UIColor(red: 0.11, green: 0.57, blue: 0.82, alpha: 1.0), icon: "✨")
+        }
+        
+        if let signButton = signInButton {
+            styleOutlineButton(signButton)
+        }
+        
+        // Add elegant shadow to logo
+        if let logo = logoImageView {
+            logo.layer.shadowColor = UIColor.black.cgColor
+            logo.layer.shadowOffset = CGSize(width: 0, height: 8)
+            logo.layer.shadowOpacity = 0.4
+            logo.layer.shadowRadius = 12
+            logo.layer.masksToBounds = false
+        }
+        
+        // Perfect the quote text view
+        if let quote = quoteTextView {
+            quote.backgroundColor = UIColor.white.withAlphaComponent(0.15)
+            quote.layer.cornerRadius = 15
+            quote.layer.masksToBounds = true
+            quote.isEditable = false
+            quote.isSelectable = false
+            quote.textContainerInset = UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
+        }
     }
     
     private func setupGradientBackground() {
@@ -51,115 +74,76 @@ class ViewController: UIViewController {
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = AppColors.primaryGradientColors
+        gradientLayer.colors = [
+            UIColor(red: 0.09, green: 0.49, blue: 0.70, alpha: 1.0).cgColor,
+            UIColor(red: 0.11, green: 0.62, blue: 0.85, alpha: 1.0).cgColor,
+            UIColor(red: 0.09, green: 0.49, blue: 0.70, alpha: 1.0).cgColor
+        ]
         gradientLayer.locations = [0.0, 0.5, 1.0]
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    private func updateGradientFrame() {
-        if let gradientLayer = view.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
-            gradientLayer.frame = view.bounds
-        }
-    }
-    
-    private func setupLogoImageView() {
-        guard let logo = logoImageView else { return }
-        logo.addShadow(opacity: 0.4, offset: CGSize(width: 0, height: 8), radius: 12)
-    }
-    
-    private func setupQuoteTextView() {
-        guard let quote = quoteTextView else { return }
-        quote.backgroundColor = UIColor.white.withAlphaComponent(0.15)
-        quote.roundCorners(radius: 15)
-        quote.isEditable = false
-        quote.isSelectable = false
-        quote.textContainerInset = UIEdgeInsets(top: 15, left: 20, bottom: 15, right: 20)
-    }
-    
-    private func setupButtons() {
-        // Style Facebook button
-        if let fbButton = facebookLoginButton {
-            styleFilledButton(fbButton, color: AppColors.facebookBlue)
-        }
+    private func styleButton(_ button: UIButton, withColor color: UIColor, icon: String) {
+        // Professional shadow effect
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOpacity = 0.35
+        button.layer.shadowRadius = 10
+        button.layer.masksToBounds = false
         
-        // Style Create Account button
-        if let createButton = createAccountButton {
-            styleFilledButton(createButton, color: AppColors.accentBlue)
-        }
+        // Smooth corner radius
+        button.layer.cornerRadius = 25
         
-        // Style Sign In button
-        if let signButton = signInButton {
-            styleOutlineButton(signButton)
-        }
-    }
-    
-    private func styleFilledButton(_ button: UIButton, color: UIColor) {
-        button.addShadow(opacity: 0.35, offset: CGSize(width: 0, height: 6), radius: 10)
-        button.roundCorners(radius: AppDimensions.buttonCornerRadius)
-        button.addBorder(color: UIColor.white.withAlphaComponent(0.3), width: 0.5)
+        // Add subtle border for depth
+        button.layer.borderWidth = 0.5
+        button.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
         
-        // Add press animations
+        // Add press animation targets
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchDown)
         button.addTarget(self, action: #selector(buttonReleased(_:)), for: [.touchUpInside, .touchUpOutside, .touchCancel])
     }
     
     private func styleOutlineButton(_ button: UIButton) {
-        button.addBorder(color: .white, width: 3.0)
-        button.roundCorners(radius: AppDimensions.buttonCornerRadius)
+        // Beautiful outline style
+        button.layer.borderWidth = 3.0
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.cornerRadius = 25
         button.backgroundColor = UIColor.white.withAlphaComponent(0.1)
-        button.addShadow(opacity: 0.25, offset: CGSize(width: 0, height: 4), radius: 8)
         
-        // Add press animations
+        // Subtle shadow
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowOpacity = 0.25
+        button.layer.shadowRadius = 8
+        button.layer.masksToBounds = false
+        
         button.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchDown)
         button.addTarget(self, action: #selector(buttonReleased(_:)), for: [.touchUpInside, .touchUpOutside, .touchCancel])
     }
     
-    // MARK: - Animations
+    // MARK: - Stunning Animations
     private func animateEntrance() {
-        animateLogo()
-        animateQuote()
-        animateButtons()
-    }
-    
-    private func animateLogo() {
-        guard let logo = logoImageView else { return }
+        // Logo animation - bouncy entrance
+        logoImageView?.alpha = 0
+        logoImageView?.transform = CGAffineTransform(scaleX: 0.3, y: 0.3).rotated(by: -0.2)
         
-        logo.alpha = 0
-        logo.transform = CGAffineTransform(scaleX: 0.3, y: 0.3).rotated(by: -0.2)
+        UIView.animate(withDuration: 1.0, delay: 0.1, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.8, options: .curveEaseOut, animations: {
+            self.logoImageView?.alpha = 1
+            self.logoImageView?.transform = .identity
+        })
         
-        UIView.animate(
-            withDuration: 1.0,
-            delay: 0.1,
-            usingSpringWithDamping: 0.6,
-            initialSpringVelocity: 0.8,
-            options: .curveEaseOut
-        ) {
-            logo.alpha = 1
-            logo.transform = .identity
-        }
-    }
-    
-    private func animateQuote() {
-        guard let quote = quoteTextView else { return }
+        // Quote animation - elegant fade up
+        quoteTextView?.alpha = 0
+        quoteTextView?.transform = CGAffineTransform(translationX: 0, y: 30)
         
-        quote.alpha = 0
-        quote.transform = CGAffineTransform(translationX: 0, y: 30)
+        UIView.animate(withDuration: 0.8, delay: 0.5, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+            self.quoteTextView?.alpha = 1
+            self.quoteTextView?.transform = .identity
+        })
         
-        UIView.animate(
-            withDuration: 0.8,
-            delay: 0.5,
-            usingSpringWithDamping: 0.8,
-            initialSpringVelocity: 0.5,
-            options: .curveEaseOut
-        ) {
-            quote.alpha = 1
-            quote.transform = .identity
-        }
-    }
-    
-    private func animateButtons() {
+        // Buttons animation - staggered cascade
         animateButton(facebookLoginButton, delay: 0.8)
         animateButton(createAccountButton, delay: 0.95)
         animateButton(signInButton, delay: 1.1)
@@ -171,53 +155,42 @@ class ViewController: UIViewController {
         button.alpha = 0
         button.transform = CGAffineTransform(translationX: -50, y: 20)
         
-        UIView.animate(
-            withDuration: 0.6,
-            delay: delay,
-            usingSpringWithDamping: 0.75,
-            initialSpringVelocity: 0.5,
-            options: .curveEaseOut
-        ) {
+        UIView.animate(withDuration: 0.6, delay: delay, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             button.alpha = 1
             button.transform = .identity
-        }
+        })
     }
     
-    // MARK: - Button Actions
     @objc private func buttonPressed(_ sender: UIButton) {
-        triggerHaptic(style: .medium)
+        // Haptic feedback for premium feel
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
         
-        UIView.animate(withDuration: AppDimensions.animationFast) {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut, animations: {
             sender.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
             sender.alpha = 0.8
-        }
+        })
     }
     
     @objc private func buttonReleased(_ sender: UIButton) {
-        UIView.animate(
-            withDuration: 0.2,
-            delay: 0,
-            usingSpringWithDamping: 0.6,
-            initialSpringVelocity: 0.5,
-            options: .curveEaseOut
-        ) {
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             sender.transform = .identity
             sender.alpha = 1.0
-        }
+        })
     }
     
     // MARK: - Facebook Login
     @IBAction func facebookLoginButtonTapped(_ sender: UIButton) {
-        triggerHaptic(style: .medium)
-        performFacebookLogin()
-    }
-    
-    private func performFacebookLogin() {
-        loginManager.logIn(permissions: AppStrings.facebookPermissions, from: self) { [weak self] result, error in
+        // Premium haptic feedback
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+        
+        // Request only public_profile (email requires Facebook approval)
+        loginManager.logIn(permissions: ["public_profile"], from: self) { [weak self] result, error in
             guard let self = self else { return }
             
             if let error = error {
-                self.showError(message: error.localizedDescription)
+                self.showStylishAlert(title: "Login Error", message: error.localizedDescription, isError: true)
                 return
             }
             
@@ -226,71 +199,87 @@ class ViewController: UIViewController {
                 return
             }
             
+            // Successfully logged in
             self.fetchFacebookUserData()
         }
     }
     
     private func fetchFacebookUserData() {
-        let request = GraphRequest(graphPath: "me", parameters: ["fields": "id, name, email, picture.type(large)"])
+        // Request only public data (email requires Facebook approval)
+        let request = GraphRequest(graphPath: "me", parameters: ["fields": "id, name, picture.type(large)"])
         
-        request.start { [weak self] _, result, error in
-            guard let self = self else { return }
-            
+        request.start { _, result, error in
             if let error = error {
-                self.showError(message: "Failed to fetch user data: \(error.localizedDescription)")
+                self.showStylishAlert(title: "Error", message: "Failed to fetch user data: \(error.localizedDescription)", isError: true)
                 return
             }
             
             guard let userData = result as? [String: Any] else {
-                self.showError(message: AppStrings.invalidData)
+                self.showStylishAlert(title: "Error", message: "Invalid user data", isError: true)
                 return
             }
             
-            self.handleSuccessfulLogin(userData: userData)
+            // Extract user information
+            let name = userData["name"] as? String ?? "User"
+            let userId = userData["id"] as? String ?? ""
+            
+            print("Facebook Login Successful!")
+            print("Name: \(name)")
+            print("User ID: \(userId)")
+            
+            // Show success with celebration
+            self.showStylishAlert(title: "🎉 Welcome!", message: "Hello, \(name)!\n\nYou're ready to start your TwinTale adventure.", isError: false) {
+                self.navigateToHomeScreen()
+            }
         }
-    }
-    
-    private func handleSuccessfulLogin(userData: [String: Any]) {
-        let name = userData["name"] as? String ?? "User"
-        let email = userData["email"] as? String ?? ""
-        let userId = userData["id"] as? String ?? ""
-        
-        // Log success
-        print("Facebook Login Successful!")
-        print("Name: \(name)")
-        print("Email: \(email)")
-        print("User ID: \(userId)")
-        
-        // Save user data
-        saveUserData(name: name, email: email, userId: userId)
-        
-        // Show success message
-        showSuccess(
-            title: AppStrings.welcomeTitle,
-            message: "Hello, \(name)!\n\nYou're ready to start your TwinTale adventure."
-        ) { [weak self] in
-            self?.navigateToHomeScreen()
-        }
-    }
-    
-    private func saveUserData(name: String, email: String, userId: String) {
-        let defaults = UserDefaults.standard
-        defaults.set(true, forKey: UserDefaultsKeys.isLoggedIn)
-        defaults.set(userId, forKey: UserDefaultsKeys.userId)
-        defaults.set(name, forKey: UserDefaultsKeys.userName)
-        defaults.set(email, forKey: UserDefaultsKeys.userEmail)
-        
-        // Post notification
-        NotificationCenter.default.post(name: .userDidLogin, object: nil)
     }
     
     private func navigateToHomeScreen() {
         print("Navigating to home screen...")
         
-        // Smooth transition animation
-        UIView.transition(with: view, duration: AppDimensions.animationSlow, options: .transitionCrossDissolve) {
-            // Navigation will happen here
-            // TODO: Implement navigation to home screen
+        // Get the window scene and set tab bar as root view controller
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let tabBarController = storyboard?.instantiateViewController(withIdentifier: "itR-Z2-kzY") as? UITabBarController {
+            
+            // Smooth transition to tab bar
+            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                window.rootViewController = tabBarController
+                window.makeKeyAndVisible()
+            })
+        } else {
+            print("Error: Could not find tab bar controller or window")
+        }
+    }
+    
+    private func showStylishAlert(title: String, message: String, isError: Bool, completion: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: isError ? .default : .default) { _ in
+            completion?()
+        })
+        
+        present(alert, animated: true) {
+            // Add haptic feedback
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(isError ? .error : .success)
+        }
+    }
+    
+    private func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
+        showStylishAlert(title: title, message: message, isError: false, completion: completion)
+    }
+}
+
+// MARK: - UI Enhancements Extension
+extension ViewController {
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Update gradient frame on rotation
+        if let gradientLayer = view.layer.sublayers?.first(where: { $0 is CAGradientLayer }) as? CAGradientLayer {
+            gradientLayer.frame = view.bounds
         }
     }
 }

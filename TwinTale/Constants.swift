@@ -96,7 +96,7 @@ struct AppStrings {
     
     // Facebook
     static let facebookLogin = "Login with Facebook"
-    static let facebookPermissions = ["public_profile", "email"]
+    static let facebookPermissions = ["public_profile"] // Note: "email" requires additional approval in Facebook Console
 }
 
 // MARK: - User Defaults Keys
