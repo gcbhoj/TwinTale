@@ -7,14 +7,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fbYOUR_FACEBOOK_APP_ID</string>
+				<string>fb1187404556173198</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
-	<string>YOUR_FACEBOOK_APP_ID</string>
+	<string>1187404556173198</string>
 	<key>FacebookClientToken</key>
-	<string>YOUR_CLIENT_TOKEN</string>
+	<string>550f4a4511831f099df47d2e2176830c</string>
 	<key>FacebookDisplayName</key>
 	<string>TwinTale</string>
 	<key>LSApplicationQueriesSchemes</key>
