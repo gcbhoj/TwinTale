@@ -8,33 +8,63 @@
 import UIKit
 
 class ScoreboardTableViewController: UITableViewController {
+    
+    // MARK: - Properties
+    private let cellIdentifier = "ScoreBoardTabViewCell"
+    
+    // Sample data - replace with real data source later
+    private var scoreboardData: [(name: String, score: Int)] = [
+        ("Your Story 1", 950),
+        ("Adventure Quest", 820),
+        ("The Brave Fox", 750),
+        ("Magic Forest", 680),
+        ("Kindness Wins", 600),
+        ("Friendship Tale", 520),
+        ("The Honest Boy", 450),
+        ("Helping Hands", 380),
+        ("Dream Big", 300),
+        ("The Golden Rule", 220)
+    ]
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        setupUI()
     }
     
+    // MARK: - UI Setup
+    private func setupUI() {
+        // Style the table view
+        tableView.backgroundColor = UIColor.systemBackground
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        
+        // Add padding
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        
+        // Enable smooth scrolling
+        tableView.showsVerticalScrollIndicator = true
+    }
+    
+    // MARK: - Table View Header
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGray6
 
-        // --- Create elements ---
+        // --- Create elements with improved styling ---
         let rankLabel = UILabel()
         rankLabel.text = "#"
         rankLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        rankLabel.textColor = UIColor.label
 
         let nameLabel = UILabel()
-        nameLabel.text = "Name"
+        nameLabel.text = "Story"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        nameLabel.textColor = UIColor.label
 
         let coinImage = UIImageView(image: UIImage(named: "Coins"))
         coinImage.contentMode = .scaleAspectFit
+        coinImage.tintColor = UIColor.systemYellow
         coinImage.widthAnchor.constraint(equalToConstant: 24).isActive = true
         coinImage.heightAnchor.constraint(equalToConstant: 24).isActive = true
 
@@ -42,7 +72,7 @@ class ScoreboardTableViewController: UITableViewController {
         let stack = UIStackView(arrangedSubviews: [rankLabel, nameLabel, coinImage])
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.distribution = .equalSpacing   
+        stack.distribution = .equalSpacing
         stack.translatesAutoresizingMaskIntoConstraints = false
 
         headerView.addSubview(stack)
@@ -51,44 +81,58 @@ class ScoreboardTableViewController: UITableViewController {
         NSLayoutConstraint.activate([
             stack.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
             stack.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-            stack.topAnchor.constraint(equalTo: headerView.topAnchor),
-            stack.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+            stack.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 8),
+            stack.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8)
         ])
 
         return headerView
     }
-    // MARK: - Table view data source
-
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    // MARK: - Table View Data Source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 10
+        return scoreboardData.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ScoreBoardTabViewCell", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        
+        // Configure with data
+        let data = scoreboardData[indexPath.row]
+        
+        // Highlight top 3 scores
+        if indexPath.row < 3 {
+            cell.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
+        } else {
+            cell.backgroundColor = UIColor.systemBackground
+        }
 
         return cell
     }
     
-
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
     
-
+    // MARK: - Table View Delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // Haptic feedback
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+    }
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    
-
 }

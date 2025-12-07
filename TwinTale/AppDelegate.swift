@@ -10,11 +10,9 @@ import FBSDKCoreKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    // MARK: - Application Lifecycle
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         
         // Initialize Facebook SDK
         ApplicationDelegate.shared.application(
@@ -22,10 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             didFinishLaunchingWithOptions: launchOptions
         )
         
+        // Configure app appearance
+        configureAppearance()
+        
         return true
     }
     
+    // MARK: - URL Handling
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        // Handle Facebook URL callback
         return ApplicationDelegate.shared.application(
             app,
             open: url,
@@ -33,21 +36,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             annotation: options[UIApplication.OpenURLOptionsKey.annotation]
         )
     }
+    
+    // MARK: - Appearance Configuration
+    private func configureAppearance() {
+        // Configure Navigation Bar appearance
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithOpaqueBackground()
+        navBarAppearance.backgroundColor = UIColor(red: 0.09, green: 0.49, blue: 0.70, alpha: 1.0)
+        navBarAppearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.boldSystemFont(ofSize: 18)
+        ]
+        navBarAppearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.boldSystemFont(ofSize: 32)
+        ]
+        
+        UINavigationBar.appearance().standardAppearance = navBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
+        UINavigationBar.appearance().tintColor = .white
+        
+        // Configure Tab Bar appearance
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = UIColor.systemBackground
+        
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
+        UITabBar.appearance().tintColor = UIColor(red: 0.09, green: 0.49, blue: 0.70, alpha: 1.0)
+    }
 
-    // MARK: UISceneSession Lifecycle
-
+    // MARK: - UISceneSession Lifecycle
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+        // Release resources for discarded scenes
     }
-
-
 }
-
