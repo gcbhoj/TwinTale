@@ -222,15 +222,36 @@ class ViewController: UIViewController {
             // Extract user information
             let name = userData["name"] as? String ?? "User"
             let userId = userData["id"] as? String ?? ""
+            let email = userData["email"] as? String // Optional - may not be available
             
             print("Facebook Login Successful!")
             print("Name: \(name)")
             print("User ID: \(userId)")
+            if let email = email {
+                print("Email: \(email)")
+            }
+            
+            // Save to Core Data (automatically checks for duplicates and only saves once)
+            self.saveUserToCoreData(facebookId: userId, name: name, email: email)
             
             // Show success with celebration
             self.showStylishAlert(title: "🎉 Welcome!", message: "Hello, \(name)!\n\nYou're ready to start your TwinTale adventure.", isError: false) {
                 self.navigateToHomeScreen()
             }
+        }
+    }
+    
+    // MARK: - Core Data
+    private func saveUserToCoreData(facebookId: String, name: String, email: String?) {
+        let coreDataManager = CoreDataManager.shared
+        
+        // saveFacebookUser automatically checks if user exists and only saves once
+        if let user = coreDataManager.saveFacebookUser(facebookId: facebookId, name: name, email: email) {
+            print("✅ User data saved/updated in Core Data")
+            print("   📧 Email: \(user.email ?? "Not available")")
+            print("   🗓️ Last login: \(user.formattedLastLoginDate)")
+        } else {
+            print("⚠️ Failed to save user to Core Data")
         }
     }
     
