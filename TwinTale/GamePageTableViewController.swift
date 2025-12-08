@@ -9,6 +9,13 @@ import UIKit
 
 class GamePageTableViewController: UITableViewController {
     
+    
+    var categoryId: Int64 = 0
+    var story: StoryList?
+    var storyFirstLine: String?
+    var categoryName: String?
+
+    
     // MARK: - Message Model
     struct Message {
         let sender: String
@@ -34,6 +41,7 @@ class GamePageTableViewController: UITableViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(hex:"8CD4E6")
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestingTableViewCell")
         tableView.separatorStyle = .none
@@ -80,62 +88,104 @@ class GamePageTableViewController: UITableViewController {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGray6
 
-        // Logo
+        // -----------------------------
+        // LOGO
+        // -----------------------------
         let logoImage = UIImageView(image: UIImage(named: "logo"))
         logoImage.contentMode = .scaleAspectFit
-        logoImage.widthAnchor.constraint(equalToConstant: 141).isActive = true
-        logoImage.heightAnchor.constraint(equalToConstant: 126).isActive = true
+        logoImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            logoImage.widthAnchor.constraint(equalToConstant: 140),
+            logoImage.heightAnchor.constraint(equalToConstant: 120)
+        ])
 
-        // Category
+        // -----------------------------
+        // CATEGORY + VALUE
+        // -----------------------------
         let categoryLabel = UILabel()
-        categoryLabel.text = "Category"
+        categoryLabel.text = "Category:"
         categoryLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        
-        let categoryTypeLabel = UITextField()
-        categoryTypeLabel.text = "Friendship"
-        categoryTypeLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        
+
+        let categoryTypeLabel = UILabel()
+        categoryTypeLabel.text = categoryName   // <-- use passed value
+        categoryTypeLabel.font = UIFont.systemFont(ofSize: 16)
+
         let categoryStack = UIStackView(arrangedSubviews: [categoryLabel, categoryTypeLabel])
         categoryStack.axis = .horizontal
-        categoryStack.distribution = .equalSpacing
-        
-        // Time Left
+        categoryStack.spacing = 8
+
+        // -----------------------------
+        // TIME LEFT
+        // -----------------------------
         let timeLabel = UILabel()
-        timeLabel.text = "Time Left"
+        timeLabel.text = "Time Left:"
         timeLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        
+
         timerLabel = UITextField()
         timerLabel.text = formatTime(remainingSeconds)
         timerLabel.font = UIFont.systemFont(ofSize: 16)
-        
+        timerLabel.borderStyle = .roundedRect
+
         let timeStack = UIStackView(arrangedSubviews: [timeLabel, timerLabel])
         timeStack.axis = .horizontal
-        timeStack.distribution = .equalSpacing
-        
-        let textStack = UIStackView(arrangedSubviews: [categoryStack, timeStack])
-        textStack.axis = .vertical
-        textStack.distribution = .equalSpacing
-        
-        let mainStack = UIStackView(arrangedSubviews: [logoImage, textStack])
-        mainStack.axis = .horizontal
-        mainStack.distribution = .equalSpacing
-        mainStack.alignment = .center
+        timeStack.spacing = 8
+
+        // -----------------------------
+        // CATEGORY + TIME (VERTICAL)
+        // -----------------------------
+        let topRightStack = UIStackView(arrangedSubviews: [categoryStack, timeStack])
+        topRightStack.axis = .vertical
+        topRightStack.spacing = 8
+        topRightStack.alignment = .leading
+
+        // -----------------------------
+        // LOGO + RIGHT STACK (HORIZONTAL)
+        // -----------------------------
+        let logoAndInfoStack = UIStackView(arrangedSubviews: [logoImage, topRightStack])
+        logoAndInfoStack.axis = .horizontal
+        logoAndInfoStack.spacing = 16
+        logoAndInfoStack.alignment = .center
+
+        // -----------------------------
+        // STARTING LINE
+        // -----------------------------
+        let startingLineLabel = UILabel()
+        startingLineLabel.text = "Starting Line:"
+        startingLineLabel.font = UIFont.boldSystemFont(ofSize: 16)
+
+        let startingLineDisplay = UILabel()
+        startingLineDisplay.text = storyFirstLine
+        startingLineDisplay.numberOfLines = 0
+        startingLineDisplay.font = UIFont.systemFont(ofSize: 16)
+
+        let startingLineStack = UIStackView(arrangedSubviews: [startingLineLabel, startingLineDisplay])
+        startingLineStack.axis = .vertical
+        startingLineStack.spacing = 4
+        startingLineStack.alignment = .leading
+
+        // -----------------------------
+        // MAIN STACK (VERTICAL)
+        // -----------------------------
+        let mainStack = UIStackView(arrangedSubviews: [logoAndInfoStack, startingLineStack])
+        mainStack.axis = .vertical
+        mainStack.spacing = 16
         mainStack.translatesAutoresizingMaskIntoConstraints = false
-        
+
         headerView.addSubview(mainStack)
 
         NSLayoutConstraint.activate([
             mainStack.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
             mainStack.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-            mainStack.topAnchor.constraint(equalTo: headerView.topAnchor),
-            mainStack.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+            mainStack.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 12),
+            mainStack.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -12)
         ])
 
         return headerView
     }
+
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 150
+        return 220
     }
 
     // MARK: - TableView Footer
@@ -251,3 +301,19 @@ class GamePageTableViewController: UITableViewController {
     }
 
 }
+extension CategoryList {
+    var displayName: String {
+        switch self {
+        case .Friendship: return "Friendship"
+        case .CourageAndBravery: return "Courage & Bravery"
+        case .Responsibility: return "Responsibility"
+        case .MagicAndFantasy: return "Magic & Fantasy"
+        case .HonestyAndTruth: return "Honesty & Truth"
+        case .Adventure: return "Adventure"
+        case .FamilyAndHome: return "Family & Home"
+        case .AnimalsAndNature: return "Animals & Nature"
+        case .RespectAndGoodManners: return "Respect & Good Manners"
+        }
+    }
+}
+

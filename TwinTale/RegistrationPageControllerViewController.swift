@@ -87,6 +87,8 @@ class RegistrationPageControllerViewController: UIViewController {
             logoImageView.heightAnchor.constraint(equalToConstant: 120)
         ])
         
+        
+        // heading
         headerView.text = "Registration"
         headerView.font = .systemFont(ofSize: 18)
         headerView.heightAnchor
@@ -124,6 +126,10 @@ class RegistrationPageControllerViewController: UIViewController {
         registerButton.layer.borderColor = UIColor.white.cgColor
         registerButton.layer.cornerRadius = 8
         registerButton.clipsToBounds = true
+        registerButton.addTarget(self,
+                          action: #selector(registerPressed),
+                          for: .touchUpInside)
+        
         
         cancelButton.setTitle("Have Account? Sign In", for: .normal)
         cancelButton.setTitleColor(.white, for: .normal)
@@ -181,12 +187,21 @@ class RegistrationPageControllerViewController: UIViewController {
         )
         
         if let message = error {
+            // ERROR CASE – do NOT redirect
             showAlert(message)
-            performSegue(withIdentifier: "GoToLoginPage", sender: self)
-        } else {
-            showAlert("User saved successfully!")
+            return
         }
+        
+        // SUCCESS CASE – redirect here
+        showAlert("User saved successfully!")
+        nameField.text = ""
+        emailField.text = ""
+        phoneField.text = ""
+        passwordField.text = ""
+        confirmPasswordField.text = ""
+        performSegue(withIdentifier: "GoToLoginPage", sender: self)
     }
+
     
     @objc func goToLogin(){
         performSegue(withIdentifier: "GoToLoginPage", sender: self)

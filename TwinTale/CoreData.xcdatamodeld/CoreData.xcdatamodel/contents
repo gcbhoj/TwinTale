@@ -7,4 +7,11 @@
         <attribute name="userEmail" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="StoryList" representedClassName="StoryList" syncable="YES" codeGenerationType="class">
+        <attribute name="categoryId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="storyContent" optional="YES" attributeType="String"/>
+        <attribute name="storyId" optional="YES" attributeType="String"/>
+        <attribute name="storyMoral" optional="YES" attributeType="String"/>
+        <attribute name="storyTitle" optional="YES" attributeType="String"/>
+    </entity>
 </model>
