@@ -208,7 +208,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwV-Ty-VsP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-750" y="-785"/>
+            <point key="canvasLocation" x="-640" y="-804"/>
         </scene>
         <!--Home Controller-->
         <scene sceneID="Kcb-DY-jbB">
@@ -238,10 +238,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ov4-V2-hO9">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="836.66666666666663"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7D-W8-gv7">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1964"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="2000"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="dDV-Ek-DsJ">
                                                 <rect key="frame" x="0.0" y="0.0" width="141" height="126"/>
@@ -348,7 +348,7 @@ And without thinking, Tommy tore the sandwich in half and said,  “Teamwork d
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AL-SU-zSL">
-                                                <rect key="frame" x="22" y="1044" width="146" height="28"/>
+                                                <rect key="frame" x="22" y="1044" width="146" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Original Story">
                                                         <attributes>
@@ -360,7 +360,7 @@ And without thinking, Tommy tore the sandwich in half and said,  “Teamwork d
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aG2-HS-Q9e">
-                                                <rect key="frame" x="22" y="1092" width="336" height="696"/>
+                                                <rect key="frame" x="22" y="1128" width="336" height="696"/>
                                                 <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="696" id="CbZ-FJ-CRo"/>
@@ -398,7 +398,7 @@ The two friends sat together and shared what was left of the sandwich,  laughi
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEY-un-iwV">
-                                                <rect key="frame" x="247" y="1837" width="120" height="40"/>
+                                                <rect key="frame" x="247" y="1873" width="120" height="40"/>
                                                 <color key="tintColor" red="0.091562046379999998" green="0.56009491519999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
@@ -416,7 +416,7 @@ The two friends sat together and shared what was left of the sandwich,  laughi
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cB-Ex-Toe">
-                                                <rect key="frame" x="171.66666666666666" y="1840" width="46.333333333333343" height="37"/>
+                                                <rect key="frame" x="171.66666666666666" y="1876" width="46.333333333333343" height="37"/>
                                                 <color key="tintColor" red="0.091562046379999998" green="0.56009491519999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">

@@ -5,9 +5,9 @@
         <attribute name="gameDataId" optional="YES" attributeType="String"/>
         <attribute name="isMoralComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isStoryComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="moralParts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MoralPart" inverseName="gameData" inverseEntity="MoralPart"/>
+        <relationship name="moralParts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MoralPart" inverseName="gameData" inverseEntity="MoralPart"/>
         <relationship name="story" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoryList"/>
-        <relationship name="storyParts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="StoryPart" inverseName="gameData" inverseEntity="StoryPart"/>
+        <relationship name="storyParts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoryPart" inverseName="gameData" inverseEntity="StoryPart"/>
     </entity>
     <entity name="MoralPart" representedClassName="MoralPart" syncable="YES" codeGenerationType="class">
         <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

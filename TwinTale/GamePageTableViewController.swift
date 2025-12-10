@@ -39,19 +39,23 @@ class GamePageTableViewController: UITableViewController {
         
         // fetching user Story Parts
         userStoryParts = fetchStoryParts(for: gameData!)
-
+        
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "GamePageTableViewCell")
         tableView.separatorStyle = .none
         startTimer()
         tableView.reloadData()
+        
+        navigationItem.hidesBackButton = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
     }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "GoToGamePage" {
+        if segue.identifier == "goToMoralPage" {
             let vc = segue.destination as! MoralEntryPageTableViewController
             
             vc.gameData = gameData
@@ -67,7 +71,7 @@ class GamePageTableViewController: UITableViewController {
         return (UIApplication.shared.delegate as! AppDelegate)
             .persistentContainer.viewContext
     }
-   
+   /*
     //MARK: - Changing the User Story to be complete in Coredata
     func updateGameStatus() {
         guard let context = gameData?.managedObjectContext else { return }
@@ -80,7 +84,7 @@ class GamePageTableViewController: UITableViewController {
         } catch {
             print("Failed to save game status: \(error)")
         }
-    }
+    }*/
 
     
     //MARK: - log out Button Action
@@ -169,7 +173,7 @@ class GamePageTableViewController: UITableViewController {
             sendButton.isEnabled = false
             completeStoryButton.isEnabled = false
             
-            updateGameStatus()
+            //updateGameStatus()
             // Automatically navigate to next page
             performSegue(withIdentifier: "goToMoralPage", sender: self)
         }
@@ -189,7 +193,8 @@ class GamePageTableViewController: UITableViewController {
         // Disable input/buttons
         inputField.isEnabled = false
         sendButton.isEnabled = false
-        updateGameStatus()
+        completeStoryButton.isEnabled = false
+       // updateGameStatus()
         
         // Navigate
         performSegue(withIdentifier: "goToMoralPage", sender: self)

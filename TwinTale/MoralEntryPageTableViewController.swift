@@ -39,10 +39,14 @@ class MoralEntryPageTableViewController: UITableViewController {
         
         userEnteredMorals = fetchMoralParts(for: game)
         
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestingTableViewCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MoralEntryPageTableViewCell")
         tableView.separatorStyle = .none
         startTimer()
+        tableView.reloadData()
+        
+        navigationItem.hidesBackButton = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+
     }
     
     //MARK: -  CORE DATA CONTEXT
@@ -50,6 +54,18 @@ class MoralEntryPageTableViewController: UITableViewController {
     func persistentContext() -> NSManagedObjectContext {
         return (UIApplication.shared.delegate as! AppDelegate)
             .persistentContainer.viewContext
+    }
+    
+    //MARK: Add new User Moral
+    func addMoralPart(to game: GameData, participantId: String?,participantName: String?, text: String, order: Int64?) {
+        let ctx = persistentContext()
+        let part = MoralPart(context: ctx)
+        part.participantId = participantId
+        part.participantName = participantName
+        part.text = text
+        if let o = order { part.order = o }
+        game.addToMoralParts(part)
+        do { try ctx.save() } catch { print("Error adding moral part:", error) }
     }
     
     //MARK: - log out Button Action
@@ -106,7 +122,34 @@ class MoralEntryPageTableViewController: UITableViewController {
         let secs = seconds % 60
         return String(format: "%02d:%02d:%02d", hrs, mins, secs)
     }
+    
+    // MARK: - Button Actions
+    @objc func sendMessage() {
+        addMoralPart(to: gameData!, participantId: loggedInUser?.userId, participantName: loggedInUser?.user_Name, text: inputField.text!, order: Int64(userEnteredMorals.count + 1))
+        
+        // CLEAR FIELD
+        inputField.text = ""
 
+        // RELOAD DATA FROM CORE DATA
+        userEnteredMorals = fetchMoralParts(for: gameData!)
+
+        // REFRESH TABLE UI
+        tableView.reloadData()
+
+        // SCROLL TO BOTTOM
+        let lastIndex = IndexPath(row: userEnteredMorals.count - 1, section: 0)
+        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: true)
+    }
+    
+    @objc func completeTask() {
+        // Disable input/buttons
+        inputField.isEnabled = false
+        sendButton.isEnabled = false
+        completeStoryButton.isEnabled = false
+        
+        // Navigate
+        performSegue(withIdentifier: "goToScoreBoard", sender: self)
+    }
     // MARK: - TableView Header
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
@@ -300,7 +343,7 @@ class MoralEntryPageTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TestingTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MoralEntryPageTableViewCell", for: indexPath)
         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         
         let msg = userEnteredMorals[indexPath.row]
@@ -334,20 +377,7 @@ class MoralEntryPageTableViewController: UITableViewController {
         return cell
     }
 
-    // MARK: - Button Actions
-    @objc func sendMessage() {
 
-    }
-    
-    @objc func completeTask() {
-        // Disable input/buttons
-        inputField.isEnabled = false
-        sendButton.isEnabled = false
-        completeStoryButton.isEnabled = false
-        
-        // Navigate
-        performSegue(withIdentifier: "goToScoreBoard", sender: self)
-    }
     
 
 }
