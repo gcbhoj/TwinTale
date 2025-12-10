@@ -14,6 +14,7 @@ class MoralEntryPageTableViewController: UITableViewController {
     var gameData: GameData?
     var categoryName: String?
     var loggedInUser: NewUser?
+    var currentStory: StoryList?
     
     var userEnteredMorals:[MoralPart] = []
     
@@ -21,7 +22,7 @@ class MoralEntryPageTableViewController: UITableViewController {
     // MARK: - Timer
     var timerLabel: UITextField!
     var countdownTimer: Timer?
-    var remainingSeconds = 24*60*60   // 1 minute for one hout use 60*60
+    var remainingSeconds = 60   // 1 minute for one hout use 60*60
 
     // MARK: - Footer References
     var inputField: UITextField!
@@ -49,12 +50,41 @@ class MoralEntryPageTableViewController: UITableViewController {
 
     }
     
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "goToGrandReveal" {
+            let vc = segue.destination as! GrandRevealViewController
+            
+            vc.gameData = gameData
+            vc.loggedInUser = loggedInUser
+            vc.currentStory = currentStory
+
+        }
+
+    }
     //MARK: -  CORE DATA CONTEXT
 
     func persistentContext() -> NSManagedObjectContext {
         return (UIApplication.shared.delegate as! AppDelegate)
             .persistentContainer.viewContext
     }
+    
+    
+     //MARK: - Changing the User Story to be complete in Coredata
+     func updateGameStatus() {
+         guard let context = gameData?.managedObjectContext else { return }
+
+         gameData?.isStoryComplete = true
+         gameData?.isMoralComplete = true
+
+         do {
+             try context.save()
+             print("Game status updated!")
+         } catch {
+             print("Failed to save game status: \(error)")
+         }
+     }
     
     //MARK: Add new User Moral
     func addMoralPart(to game: GameData, participantId: String?,participantName: String?, text: String, order: Int64?) {
@@ -110,6 +140,8 @@ class MoralEntryPageTableViewController: UITableViewController {
             // Disable input when timer ends
             inputField.isEnabled = false
             sendButton.isEnabled = false
+            
+            updateGameStatus()
             
             // Automatically navigate to next page
             performSegue(withIdentifier: "goToGrandReveal", sender: self)
@@ -302,7 +334,8 @@ class MoralEntryPageTableViewController: UITableViewController {
         
         // Send Button
         sendButton = UIButton(type: .system)
-        sendButton.setTitle("Send", for: .normal)
+        sendButton.setImage(UIImage(named: "Send"), for: .normal)
+        sendButton.tintColor = .systemBlue      // optional (affects SF Symbols)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         

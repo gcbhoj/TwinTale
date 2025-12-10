@@ -3,8 +3,8 @@
     <entity name="GameData" representedClassName="GameData" syncable="YES" codeGenerationType="class">
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="gameDataId" optional="YES" attributeType="String"/>
-        <attribute name="isMoralComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isStoryComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isMoralComplete" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isStoryComplete" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <relationship name="moralParts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MoralPart" inverseName="gameData" inverseEntity="MoralPart"/>
         <relationship name="story" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoryList"/>
         <relationship name="storyParts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StoryPart" inverseName="gameData" inverseEntity="StoryPart"/>

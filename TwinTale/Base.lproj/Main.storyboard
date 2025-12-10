@@ -13,11 +13,11 @@
             <objects>
                 <viewController id="UsE-VD-H8y" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="khV-tA-r1v">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="t5l-PN-dZq">
-                                <rect key="frame" x="0.0" y="59" width="141" height="170"/>
+                                <rect key="frame" x="0.0" y="0.0" width="141" height="253"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="a5U-H1-qdH"/>
@@ -40,7 +40,7 @@
             <objects>
                 <tableViewController id="n9a-gm-wZk" customClass="LeaderboardTableViewController" customModule="TwinTale" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="I0E-fj-KDh">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="xIj-AI-Y5y">
@@ -102,7 +102,7 @@
             <objects>
                 <viewController id="znX-xh-smb" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="056-KA-jkV">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="zJZ-DC-I7t"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -118,7 +118,7 @@
             <objects>
                 <viewController id="IJI-ag-13K" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dgs-gs-NR9">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="ZsJ-F2-2Ey"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -134,7 +134,7 @@
             <objects>
                 <viewController id="iWH-CB-DJ7" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mGl-Z1-tDg">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="B9V-sh-4Zz"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -150,7 +150,7 @@
             <objects>
                 <tableViewController id="hWD-cb-DkX" customClass="GamePageTableViewController" customModule="TwinTale" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="quz-Mu-TLF">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="sectionIndexBackgroundColor" red="0.5490196078431373" green="0.83137254901960778" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -183,7 +183,7 @@
             <objects>
                 <tableViewController id="one-Pd-nDr" customClass="MoralEntryPageTableViewController" customModule="TwinTale" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="ZGM-MB-Pix">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
@@ -208,14 +208,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwV-Ty-VsP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-640" y="-804"/>
+            <point key="canvasLocation" x="-891" y="-804"/>
         </scene>
         <!--Home Controller-->
         <scene sceneID="Kcb-DY-jbB">
             <objects>
                 <viewController id="X7S-OT-jvm" customClass="HomeController" customModule="TwinTale" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3pR-ab-iqB">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="doa-aU-Nzw"/>
                         <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
@@ -229,275 +229,24 @@
             </objects>
             <point key="canvasLocation" x="-2810" y="-785"/>
         </scene>
-        <!--View Controller-->
+        <!--Grand Reveal View Controller-->
         <scene sceneID="gW9-X9-ntd">
             <objects>
-                <viewController id="Xxu-au-kUX" sceneMemberID="viewController">
+                <viewController id="Xxu-au-kUX" customClass="GrandRevealViewController" customModule="TwinTale" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AvU-Yt-UgP">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ov4-V2-hO9">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H7D-W8-gv7">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="2000"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="dDV-Ek-DsJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="141" height="126"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="126" id="btL-Ed-0hl"/>
-                                                    <constraint firstAttribute="width" constant="141" id="oVc-9n-28B"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jsx-LI-ZyH">
-                                                <rect key="frame" x="171" y="14" width="146" height="28"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Grand Reveal">
-                                                        <attributes>
-                                                            <font key="NSFont" size="24" name="MicrosoftSansSerif"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CBE-Fo-s0M">
-                                                <rect key="frame" x="149" y="54" width="236" height="72"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Moral: Focused Version">
-                                                        <attributes>
-                                                            <font key="NSFont" size="18" name="MicrosoftSansSerif"/>
-                                                            <real key="NSKern" value="0.0"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
-                                                                <tabStops/>
-                                                            </paragraphStyle>
-                                                            <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <real key="NSStrokeWidth" value="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wr9-a7-S3u">
-                                                <rect key="frame" x="8" y="124" width="377" height="90"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="90" id="2Mu-IN-fiC"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Story Title: The Stuck Sandwich Situation">
-                                                        <attributes>
-                                                            <font key="NSFont" size="18" name="MicrosoftSansSerif"/>
-                                                            <real key="NSKern" value="0.0"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
-                                                                <tabStops/>
-                                                            </paragraphStyle>
-                                                            <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <real key="NSStrokeWidth" value="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9g-9O-JqI">
-                                                <rect key="frame" x="21.999999999999993" y="249" width="118.33333333333331" height="38"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="38" id="e75-YK-VNf"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Your Story:">
-                                                        <attributes>
-                                                            <font key="NSFont" size="24" name="MicrosoftSansSerif"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h8x-DH-XoG">
-                                                <rect key="frame" x="22" y="310" width="336" height="713"/>
-                                                <color key="backgroundColor" red="0.24313725490196078" green="0.25490196078431371" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="713" id="Ood-xM-Gav"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment>
-                                                        <string key="content">Tommy and Ben were best friends who always shared everything  except sandwiches, because Tommy loved food too much.
-One day during lunch at school, Tommy bought a giant triple-cheese sandwich.  As he took the first bite, the sandwich slipped out of his hands, bounced off the table,  and somehow got perfectly stuck in the classroom window blinds.
-Tommy panicked.  Ben? He laughed so hard he fell off his chair.
-But then, seeing Tommy’s worried face, Ben got up, climbed on a chair,  and tried to rescue the trapped sandwich like it was a mission from a superhero movie.
-He tugged.  He pulled.  He almost lost his balance.  The blinds squeaked like a dying robot.
-Finally, the sandwich plopped down— straight onto Ben’s head.
-Tommy froze.  Then he burst out laughing.
-Ben laughed too, cheese sliding down his forehead.
-And without thinking, Tommy tore the sandwich in half and said,  “Teamwork deserves a reward.”
-</string>
-                                                        <attributes>
-                                                            <color key="NSColor" systemColor="labelColor"/>
-                                                            <font key="NSFont" metaFont="system" size="18"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="They sat together eating the world’s most dramatic sandwich.">
-                                                        <attributes>
-                                                            <color key="NSColor" systemColor="labelColor"/>
-                                                            <font key="NSFont" metaFont="system" size="18"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AL-SU-zSL">
-                                                <rect key="frame" x="22" y="1044" width="146" height="64"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Original Story">
-                                                        <attributes>
-                                                            <font key="NSFont" size="24" name="MicrosoftSansSerif"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aG2-HS-Q9e">
-                                                <rect key="frame" x="22" y="1128" width="336" height="696"/>
-                                                <color key="backgroundColor" red="0.4756349325" green="0.47564673419999998" blue="0.47564041610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="696" id="CbZ-FJ-CRo"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment>
-                                                        <string key="content">Tommy and Ben had been best friends since kindergarten.  They didn’t always agree on everything, but when one of them had a problem,  the other was always there to help.
-</string>
-                                                        <attributes>
-                                                            <font key="NSFont" size="18" name="MicrosoftSansSerif"/>
-                                                            <real key="NSKern" value="0.0"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
-                                                                <tabStops/>
-                                                            </paragraphStyle>
-                                                            <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <real key="NSStrokeWidth" value="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment>
-                                                        <string key="content">One afternoon at school, Tommy brought a large sandwich for lunch.  While reaching for his drink, he accidentally knocked the sandwich out of his hands.  It bounced off the desk and became stuck high up between the classroom window blinds.
-Tommy felt embarrassed and didn’t know what to do.  Ben noticed his friend’s worried expression and immediately went to help.  He found a chair, carefully climbed onto it, and reached up to free the sandwich.  It wasn’t easy—the blinds were tight, and Ben almost slipped—but he didn’t give up.
-Finally, the sandwich came loose and fell down, landing on the floor.  Tommy sighed with relief and thanked Ben for helping him,  even though it wasn’t Ben’s problem.
-The two friends sat together and shared what was left of the sandwich,  laughing about the silly situation.</string>
-                                                        <attributes>
-                                                            <font key="NSFont" size="18" name="MicrosoftSansSerif"/>
-                                                            <real key="NSKern" value="0.0"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
-                                                                <tabStops/>
-                                                            </paragraphStyle>
-                                                            <color key="NSStrokeColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <real key="NSStrokeWidth" value="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEY-un-iwV">
-                                                <rect key="frame" x="247" y="1873" width="120" height="40"/>
-                                                <color key="tintColor" red="0.091562046379999998" green="0.56009491519999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
-                                                    <attributedString key="attributedTitle">
-                                                        <fragment content="View Score Board">
-                                                            <attributes>
-                                                                <font key="NSFont" size="12" name="Helvetica"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <segue destination="W64-nH-lhb" kind="show" identifier="goToScoreboard" id="PYL-B4-951"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cB-Ex-Toe">
-                                                <rect key="frame" x="171.66666666666666" y="1876" width="46.333333333333343" height="37"/>
-                                                <color key="tintColor" red="0.091562046379999998" green="0.56009491519999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
-                                                    <attributedString key="attributedTitle">
-                                                        <fragment content="Quit">
-                                                            <attributes>
-                                                                <font key="NSFont" size="12" name="Helvetica"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <segue destination="X7S-OT-jvm" kind="show" id="dhv-TB-RA2"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.65098039215686276" green="0.80392156862745101" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="CBE-Fo-s0M" firstAttribute="bottom" secondItem="dDV-Ek-DsJ" secondAttribute="bottom" id="2Ao-HP-rcc"/>
-                                            <constraint firstItem="6AL-SU-zSL" firstAttribute="top" secondItem="h8x-DH-XoG" secondAttribute="bottom" constant="21" id="4lL-zI-qa5"/>
-                                            <constraint firstItem="dDV-Ek-DsJ" firstAttribute="top" secondItem="H7D-W8-gv7" secondAttribute="top" id="7oQ-l2-1VD"/>
-                                            <constraint firstAttribute="bottom" secondItem="aG2-HS-Q9e" secondAttribute="bottom" constant="176" id="8Ec-Vj-mr7"/>
-                                            <constraint firstItem="wr9-a7-S3u" firstAttribute="trailing" secondItem="CBE-Fo-s0M" secondAttribute="trailing" id="8PD-Rh-vm8"/>
-                                            <constraint firstAttribute="trailing" secondItem="6AL-SU-zSL" secondAttribute="trailing" constant="225" id="8TV-57-OwJ"/>
-                                            <constraint firstItem="9cB-Ex-Toe" firstAttribute="top" secondItem="aG2-HS-Q9e" secondAttribute="bottom" constant="52" id="9hg-2o-qXZ"/>
-                                            <constraint firstItem="aG2-HS-Q9e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6AL-SU-zSL" secondAttribute="leading" id="CAo-1a-YAB"/>
-                                            <constraint firstAttribute="bottom" secondItem="PEY-un-iwV" secondAttribute="bottom" constant="87" id="DEq-nX-3Az"/>
-                                            <constraint firstItem="aG2-HS-Q9e" firstAttribute="centerX" secondItem="h8x-DH-XoG" secondAttribute="centerX" id="FTU-u9-qrf"/>
-                                            <constraint firstItem="aG2-HS-Q9e" firstAttribute="leading" secondItem="6AL-SU-zSL" secondAttribute="leading" id="FjS-dI-XId"/>
-                                            <constraint firstItem="wr9-a7-S3u" firstAttribute="top" secondItem="Jsx-LI-ZyH" secondAttribute="bottom" constant="82" id="JpQ-NU-cNL"/>
-                                            <constraint firstAttribute="trailing" secondItem="h8x-DH-XoG" secondAttribute="trailing" constant="35" id="LB9-WV-QEK"/>
-                                            <constraint firstItem="CBE-Fo-s0M" firstAttribute="leading" secondItem="dDV-Ek-DsJ" secondAttribute="trailing" constant="8" id="LYM-yR-igs"/>
-                                            <constraint firstAttribute="trailing" secondItem="x9g-9O-JqI" secondAttribute="trailing" constant="252.66666666666669" id="MID-92-0y5"/>
-                                            <constraint firstItem="PEY-un-iwV" firstAttribute="top" secondItem="aG2-HS-Q9e" secondAttribute="bottom" constant="49" id="OWM-34-3tO"/>
-                                            <constraint firstItem="CBE-Fo-s0M" firstAttribute="top" secondItem="Jsx-LI-ZyH" secondAttribute="bottom" constant="12" id="RLg-gf-2ri"/>
-                                            <constraint firstItem="Jsx-LI-ZyH" firstAttribute="top" secondItem="H7D-W8-gv7" secondAttribute="top" constant="14" id="Ri4-o8-2RL"/>
-                                            <constraint firstItem="h8x-DH-XoG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="x9g-9O-JqI" secondAttribute="leading" id="Zv3-ZD-BFp"/>
-                                            <constraint firstItem="9cB-Ex-Toe" firstAttribute="bottom" secondItem="PEY-un-iwV" secondAttribute="bottom" id="cKg-5j-Upq"/>
-                                            <constraint firstItem="x9g-9O-JqI" firstAttribute="leading" secondItem="H7D-W8-gv7" secondAttribute="leading" constant="22" id="eNv-tM-yRt"/>
-                                            <constraint firstAttribute="trailing" secondItem="PEY-un-iwV" secondAttribute="trailing" constant="26" id="fEo-O7-qdc"/>
-                                            <constraint firstAttribute="trailing" secondItem="Jsx-LI-ZyH" secondAttribute="trailing" constant="76" id="fOe-bm-5oV"/>
-                                            <constraint firstItem="x9g-9O-JqI" firstAttribute="top" secondItem="H7D-W8-gv7" secondAttribute="top" constant="249" id="fw5-mQ-FVY"/>
-                                            <constraint firstItem="aG2-HS-Q9e" firstAttribute="top" secondItem="6AL-SU-zSL" secondAttribute="bottom" constant="20" id="gqR-GJ-Jf0"/>
-                                            <constraint firstAttribute="height" constant="2000" id="hkW-vm-0lQ"/>
-                                            <constraint firstItem="CBE-Fo-s0M" firstAttribute="trailing" secondItem="H7D-W8-gv7" secondAttribute="trailingMargin" id="jJW-5v-RWp"/>
-                                            <constraint firstItem="wr9-a7-S3u" firstAttribute="leading" secondItem="H7D-W8-gv7" secondAttribute="leadingMargin" id="qnM-Qp-HTm"/>
-                                            <constraint firstItem="Jsx-LI-ZyH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dDV-Ek-DsJ" secondAttribute="trailing" symbolic="YES" id="rar-gN-jBi"/>
-                                            <constraint firstItem="PEY-un-iwV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9cB-Ex-Toe" secondAttribute="trailing" symbolic="YES" id="s0w-pe-b15"/>
-                                            <constraint firstItem="h8x-DH-XoG" firstAttribute="top" secondItem="x9g-9O-JqI" secondAttribute="bottom" constant="23" id="scx-en-RMt"/>
-                                            <constraint firstItem="6AL-SU-zSL" firstAttribute="leading" secondItem="h8x-DH-XoG" secondAttribute="leading" id="t8b-HO-wlu"/>
-                                            <constraint firstItem="dDV-Ek-DsJ" firstAttribute="leading" secondItem="H7D-W8-gv7" secondAttribute="leading" id="yFF-IO-wB5"/>
-                                            <constraint firstItem="9cB-Ex-Toe" firstAttribute="leading" secondItem="H7D-W8-gv7" secondAttribute="leading" constant="171.66666666666666" id="zFW-q6-raJ"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="H7D-W8-gv7" secondAttribute="bottom" id="5sZ-nr-14h"/>
-                                    <constraint firstAttribute="trailing" secondItem="H7D-W8-gv7" secondAttribute="trailing" id="Hdc-O0-W4Y"/>
-                                    <constraint firstItem="H7D-W8-gv7" firstAttribute="leading" secondItem="Ov4-V2-hO9" secondAttribute="leading" id="ei7-KK-gIU"/>
-                                    <constraint firstItem="H7D-W8-gv7" firstAttribute="top" secondItem="Ov4-V2-hO9" secondAttribute="top" id="sJz-F9-T2t"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="yEn-4o-ckI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="H7D-W8-gv7" firstAttribute="width" secondItem="AvU-Yt-UgP" secondAttribute="width" id="5qx-p8-YlT"/>
-                            <constraint firstAttribute="bottom" secondItem="Ov4-V2-hO9" secondAttribute="bottom" id="Ir5-Wv-P66"/>
-                            <constraint firstItem="Ov4-V2-hO9" firstAttribute="top" secondItem="AvU-Yt-UgP" secondAttribute="top" id="UHT-BT-Kyv"/>
-                            <constraint firstItem="Ov4-V2-hO9" firstAttribute="leading" secondItem="yEn-4o-ckI" secondAttribute="leading" id="bsz-D6-hp3"/>
-                            <constraint firstItem="Ov4-V2-hO9" firstAttribute="trailing" secondItem="yEn-4o-ckI" secondAttribute="trailing" id="llE-jE-H8I"/>
-                            <constraint firstItem="H7D-W8-gv7" firstAttribute="height" secondItem="AvU-Yt-UgP" secondAttribute="height" multiplier="2.34742" id="s6f-K5-4eM"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hAD-r5-lQo"/>
-                    <size key="freeformSize" width="393" height="852"/>
+                    <connections>
+                        <segue destination="itR-Z2-kzY" kind="show" identifier="GoToHomePage" id="ibi-ay-O21"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UR4-Uy-i4e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2119.8473282442746" y="-637.32394366197184"/>
+            <point key="canvasLocation" x="529" y="-785"/>
         </scene>
         <!--Scoreboard Table View Controller-->
         <scene sceneID="NmC-HW-rd5">
@@ -669,7 +418,7 @@ The two friends sat together and shared what was left of the sandwich,  laughi
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7eU-Zo-hzh">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -683,6 +432,7 @@ The two friends sat together and shared what was left of the sandwich,  laughi
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="ibi-ay-O21"/>
         <segue reference="ZGs-pO-Cjo"/>
         <segue reference="dis-QP-cvQ"/>
     </inferredMetricsTieBreakers>
@@ -694,9 +444,6 @@ The two friends sat together and shared what was left of the sandwich,  laughi
         <image name="home-01" width="32" height="32"/>
         <image name="logo" width="384" height="337"/>
         <image name="user" width="35" height="41"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

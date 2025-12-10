@@ -72,6 +72,7 @@ class HomeController: UIViewController {
                 vc.story = story
                 vc.gameData = currentGame
                 vc.loggedInUser = loggedInUser
+                vc.currentStory = currentStory
                 
                 // First line
                 vc.storyFirstLine = firstLine(from: story.storyContent)
@@ -419,11 +420,11 @@ class HomeController: UIViewController {
         categoriesSecondStack.spacing = 12
         categoriesSecondStack.distribution = .fillEqually
 
-        animalsAndNatureButton.setImage(UIImage(named: "Friendship (1)"), for: .normal)
+        animalsAndNatureButton.setImage(UIImage(named: "Animals_Nature"), for: .normal)
         animalsAndNatureButton.widthAnchor.constraint(equalToConstant: 161).isActive = true
         animalsAndNatureButton.heightAnchor.constraint(equalToConstant: 108).isActive = true
 
-        respectAndGoodMannersButton.setImage(UIImage(named: "Friendship (1)"), for: .normal)
+        respectAndGoodMannersButton.setImage(UIImage(named: "Respect_GoodMann"), for: .normal)
         respectAndGoodMannersButton.widthAnchor.constraint(equalToConstant: 161).isActive = true
         respectAndGoodMannersButton.heightAnchor.constraint(equalToConstant: 108).isActive = true
 

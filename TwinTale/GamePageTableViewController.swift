@@ -17,6 +17,7 @@ class GamePageTableViewController: UITableViewController {
     var categoryName: String?
     var loggedInUser: NewUser?
     var gameData: GameData?
+    var currentStory: StoryList?
 
     
     var userStoryParts:[StoryPart] = []
@@ -24,12 +25,12 @@ class GamePageTableViewController: UITableViewController {
    // MARK: - Timer
     var timerLabel: UITextField!
     var countdownTimer: Timer?
-    var remainingSeconds = 24*60*60   // 1 minute for 24 hours use 24*60*60
+    var remainingSeconds = 60   // 1 minute for 24 hours use 24*60*60
 
     // MARK: - Footer References
     var inputField: UITextField!
     var sendButton: UIButton!
-    var completeStoryButton: UIButton!
+   
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -61,6 +62,7 @@ class GamePageTableViewController: UITableViewController {
             vc.gameData = gameData
             vc.categoryName = categoryName
             vc.loggedInUser = loggedInUser
+            vc.currentStory = currentStory
 
         }
 
@@ -71,20 +73,7 @@ class GamePageTableViewController: UITableViewController {
         return (UIApplication.shared.delegate as! AppDelegate)
             .persistentContainer.viewContext
     }
-   /*
-    //MARK: - Changing the User Story to be complete in Coredata
-    func updateGameStatus() {
-        guard let context = gameData?.managedObjectContext else { return }
 
-        gameData?.isStoryComplete = true
-
-        do {
-            try context.save()
-            print("Game status updated!")
-        } catch {
-            print("Failed to save game status: \(error)")
-        }
-    }*/
 
     
     //MARK: - log out Button Action
@@ -120,8 +109,17 @@ class GamePageTableViewController: UITableViewController {
         tableView.reloadData()
 
         // SCROLL TO BOTTOM
-        let lastIndex = IndexPath(row: userStoryParts.count - 1, section: 0)
-        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: true)
+        DispatchQueue.main.async {
+            
+            guard self.userStoryParts.count > 0 else { return }
+            
+            let lastIndex = IndexPath(row: self.userStoryParts.count - 1,
+                                      section: 0)
+
+            self.tableView.scrollToRow(at: lastIndex,
+                                       at: .bottom,
+                                       animated: true)
+        }
     }
 
 
@@ -171,9 +169,8 @@ class GamePageTableViewController: UITableViewController {
             // Disable input when timer ends
             inputField.isEnabled = false
             sendButton.isEnabled = false
-            completeStoryButton.isEnabled = false
+           
             
-            //updateGameStatus()
             // Automatically navigate to next page
             performSegue(withIdentifier: "goToMoralPage", sender: self)
         }
@@ -189,16 +186,6 @@ class GamePageTableViewController: UITableViewController {
     
 
     
-    @objc func completeTask() {
-        // Disable input/buttons
-        inputField.isEnabled = false
-        sendButton.isEnabled = false
-        completeStoryButton.isEnabled = false
-       // updateGameStatus()
-        
-        // Navigate
-        performSegue(withIdentifier: "goToMoralPage", sender: self)
-    }
     
     // MARK: - TableView Header
     override func tableView(_ tableView: UITableView,
@@ -413,23 +400,8 @@ class GamePageTableViewController: UITableViewController {
         inputStack.alignment = .center
         inputStack.distribution = .fillProportionally
         
-        // Complete Story Button
-        completeStoryButton = UIButton(type: .system)
-        completeStoryButton.setTitle("Complete Story", for: .normal)
-        completeStoryButton.setTitleColor(.white, for: .normal)
-        completeStoryButton.backgroundColor = UIColor(hex: "#1877F2")   // Facebook Blue
-        completeStoryButton.layer.borderWidth = 1
-        completeStoryButton.layer.borderColor = UIColor.white.cgColor
-        completeStoryButton.layer.cornerRadius = 8
-        completeStoryButton.clipsToBounds = true
-        completeStoryButton.addTarget(self, action: #selector(completeTask), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            completeStoryButton.widthAnchor.constraint(equalToConstant: 200),
-            completeStoryButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
 
-        let stack = UIStackView(arrangedSubviews: [inputStack, completeStoryButton])
+        let stack = UIStackView(arrangedSubviews: [inputStack])
         stack.axis = .vertical
         stack.spacing = 12
         stack.alignment = .fill
