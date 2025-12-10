@@ -131,6 +131,7 @@ class LoginPageController: UIViewController {
         // Input Fields
         emailField.placeholder = "Email Address"
         passwordField.placeholder = "Password"
+        passwordField.isSecureTextEntry = true
         
         let fields = [
             emailField,
@@ -154,6 +155,11 @@ class LoginPageController: UIViewController {
                           action: #selector(authenticateUser),
                           for: .touchUpInside)
         
+        NSLayoutConstraint.activate([
+            logInButton.widthAnchor.constraint(equalToConstant: 200),
+            logInButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
         // STACK
         
         let stack = UIStackView(arrangedSubviews: [

@@ -102,6 +102,12 @@ class ViewController: UIViewController {
             $0.heightAnchor
                 .constraint(equalToConstant: 44).isActive = true
         }
+        
+         buttons.forEach { btn in
+            btn.translatesAutoresizingMaskIntoConstraints = false
+            btn.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        }
 
 
         // --------------------------------------------------

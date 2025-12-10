@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class GamePageTableViewController: UITableViewController {
     
@@ -14,24 +15,16 @@ class GamePageTableViewController: UITableViewController {
     var story: StoryList?
     var storyFirstLine: String?
     var categoryName: String?
+    var loggedInUser: NewUser?
+    var gameData: GameData?
 
     
-    // MARK: - Message Model
-    struct Message {
-        let sender: String
-        let text: String
-    }
+    var userStoryParts:[StoryPart] = []
 
-    var messages: [Message] = [
-        Message(sender: "You", text: "True friends stay by your side when you need them most."),
-        Message(sender: "Friend", text: "Absolutely! That's what friends are for."),
-        Message(sender: "Jack", text: "Hello, how are you?")
-    ]
-    
-    // MARK: - Timer
+   // MARK: - Timer
     var timerLabel: UITextField!
     var countdownTimer: Timer?
-    var remainingSeconds = 60   // 1 minute for 24 hours use 24*60*60
+    var remainingSeconds = 24*60*60   // 1 minute for 24 hours use 24*60*60
 
     // MARK: - Footer References
     var inputField: UITextField!
@@ -42,12 +35,116 @@ class GamePageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex:"8CD4E6")
+        tableView.backgroundColor = UIColor(hex:"8CD4E6")
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestingTableViewCell")
+        // fetching user Story Parts
+        userStoryParts = fetchStoryParts(for: gameData!)
+
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "GamePageTableViewCell")
         tableView.separatorStyle = .none
         startTimer()
+        tableView.reloadData()
+    }
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "GoToGamePage" {
+            let vc = segue.destination as! MoralEntryPageTableViewController
+            
+            vc.gameData = gameData
+            vc.categoryName = categoryName
+            vc.loggedInUser = loggedInUser
+
+        }
+
+    }
+    //MARK: -  CORE DATA CONTEXT
+
+    func persistentContext() -> NSManagedObjectContext {
+        return (UIApplication.shared.delegate as! AppDelegate)
+            .persistentContainer.viewContext
+    }
+   
+    //MARK: - Changing the User Story to be complete in Coredata
+    func updateGameStatus() {
+        guard let context = gameData?.managedObjectContext else { return }
+
+        gameData?.isStoryComplete = true
+
+        do {
+            try context.save()
+            print("Game status updated!")
+        } catch {
+            print("Failed to save game status: \(error)")
+        }
     }
 
+    
+    //MARK: - log out Button Action
+    @objc func loggingOutUser(){
+        logOutUser()
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
+    
+    //MARK: - Logging A user OUt
+    func logOutUser (){
+        loggedInUser = nil
+    }
+    
+    @objc func sendMessage() {
+
+        guard let text = inputField.text, !text.isEmpty else { return }
+
+        // Add new part
+        addStoryPart(to: gameData!,
+                     participantId: loggedInUser?.userId,
+                     participantName: loggedInUser?.user_Name,
+                     text: text,
+                     order: Int64(userStoryParts.count + 1))
+
+        // CLEAR FIELD
+        inputField.text = ""
+
+        // RELOAD DATA FROM CORE DATA
+        userStoryParts = fetchStoryParts(for: gameData!)
+
+        // REFRESH TABLE UI
+        tableView.reloadData()
+
+        // SCROLL TO BOTTOM
+        let lastIndex = IndexPath(row: userStoryParts.count - 1, section: 0)
+        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: true)
+    }
+
+
+    //MARK: -  Add data to story parts
+    func addStoryPart(to game: GameData, participantId: String?,participantName: String?, text: String,order: Int64?) {
+        let ctx = persistentContext()
+        let part = StoryPart(context: ctx)
+        part.participantId = participantId
+        part.participantName = participantName
+        part.text = text
+        if let o = order { part.order = o }
+        game.addToStoryParts(part) // generated helper from Codegen
+        do { try ctx.save() } catch { print("Error adding story part:", error) }
+    }
+    
+    //MARK: - Retreive story parts by GameData
+    func fetchStoryParts(for game: GameData) -> [StoryPart]{
+        
+        let context = persistentContext()
+        let req: NSFetchRequest<StoryPart> = StoryPart.fetchRequest()
+        req.predicate = NSPredicate(format: "gameData == %@", game)
+        req.sortDescriptors = [NSSortDescriptor(key: "order", ascending: true)]
+        do { return try context.fetch(req) } catch { print(error); return [] }
+        
+    }
+    
+    
     // MARK: - Timer Functions
     func startTimer() {
         countdownTimer = Timer.scheduledTimer(timeInterval: 1.0,
@@ -56,6 +153,8 @@ class GamePageTableViewController: UITableViewController {
                                               userInfo: nil,
                                               repeats: true)
     }
+    
+    //MARK: - Timer Update
     
     @objc func updateTimer() {
         if remainingSeconds > 0 {
@@ -70,10 +169,12 @@ class GamePageTableViewController: UITableViewController {
             sendButton.isEnabled = false
             completeStoryButton.isEnabled = false
             
+            updateGameStatus()
             // Automatically navigate to next page
             performSegue(withIdentifier: "goToMoralPage", sender: self)
         }
     }
+    //MARK: - Formatting Time
     
     func formatTime(_ seconds: Int) -> String {
         let hrs = seconds / 3600
@@ -81,96 +182,188 @@ class GamePageTableViewController: UITableViewController {
         let secs = seconds % 60
         return String(format: "%02d:%02d:%02d", hrs, mins, secs)
     }
+    
 
+    
+    @objc func completeTask() {
+        // Disable input/buttons
+        inputField.isEnabled = false
+        sendButton.isEnabled = false
+        updateGameStatus()
+        
+        // Navigate
+        performSegue(withIdentifier: "goToMoralPage", sender: self)
+    }
+    
     // MARK: - TableView Header
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
+    override func tableView(_ tableView: UITableView,
+                            viewForHeaderInSection section: Int) -> UIView? {
+        
         let headerView = UIView()
-        headerView.backgroundColor = UIColor.systemGray6
-
-        // -----------------------------
-        // LOGO
-        // -----------------------------
+        headerView.backgroundColor = UIColor(hex: "8CD4E6")
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+      
+        // MARK: - LEFT: LOGO
+   
         let logoImage = UIImageView(image: UIImage(named: "logo"))
         logoImage.contentMode = .scaleAspectFit
         logoImage.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             logoImage.widthAnchor.constraint(equalToConstant: 140),
             logoImage.heightAnchor.constraint(equalToConstant: 120)
         ])
+        
+        
 
-        // -----------------------------
-        // CATEGORY + VALUE
-        // -----------------------------
-        let categoryLabel = UILabel()
-        categoryLabel.text = "Category:"
-        categoryLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        // MARK: - TIME STACK
 
-        let categoryTypeLabel = UILabel()
-        categoryTypeLabel.text = categoryName   // <-- use passed value
-        categoryTypeLabel.font = UIFont.systemFont(ofSize: 16)
-
-        let categoryStack = UIStackView(arrangedSubviews: [categoryLabel, categoryTypeLabel])
-        categoryStack.axis = .horizontal
-        categoryStack.spacing = 8
-
-        // -----------------------------
-        // TIME LEFT
-        // -----------------------------
         let timeLabel = UILabel()
         timeLabel.text = "Time Left:"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        timeLabel.font = .boldSystemFont(ofSize: 12)
 
         timerLabel = UITextField()
         timerLabel.text = formatTime(remainingSeconds)
-        timerLabel.font = UIFont.systemFont(ofSize: 16)
+        timerLabel.font = .systemFont(ofSize: 12)
         timerLabel.borderStyle = .roundedRect
-
+        timerLabel.translatesAutoresizingMaskIntoConstraints = false
+        timerLabel.isUserInteractionEnabled = false
+        
         let timeStack = UIStackView(arrangedSubviews: [timeLabel, timerLabel])
         timeStack.axis = .horizontal
-        timeStack.spacing = 8
+        timeStack.spacing = 3
+        timeStack.alignment = .center
+        timeStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
 
-        // -----------------------------
-        // CATEGORY + TIME (VERTICAL)
-        // -----------------------------
-        let topRightStack = UIStackView(arrangedSubviews: [categoryStack, timeStack])
-        topRightStack.axis = .vertical
-        topRightStack.spacing = 8
-        topRightStack.alignment = .leading
+        //MARK: -  LOGOUT BUTTON
 
-        // -----------------------------
-        // LOGO + RIGHT STACK (HORIZONTAL)
-        // -----------------------------
-        let logoAndInfoStack = UIStackView(arrangedSubviews: [logoImage, topRightStack])
-        logoAndInfoStack.axis = .horizontal
-        logoAndInfoStack.spacing = 16
-        logoAndInfoStack.alignment = .center
+        let logOutButton = UIButton(type: .system)
+        logOutButton.setTitle("Logout", for: .normal)
+        logOutButton.titleLabel?.font = .systemFont(ofSize: 12)
+        logOutButton.setTitleColor(.white, for: .normal)
+        logOutButton.backgroundColor = .systemGray
+        logOutButton.layer.cornerRadius = 6
+        logOutButton.clipsToBounds = true
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        logOutButton.addTarget(self,
+                               action: #selector(loggingOutUser),
+                               for: .touchUpInside)
 
-        // -----------------------------
-        // STARTING LINE
-        // -----------------------------
+        NSLayoutConstraint.activate([
+            logOutButton.heightAnchor.constraint(equalToConstant: 30),
+            logOutButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 80)
+        ])
+        
+        
+       
+        //MARK: - TOP RIGHT ROW: TIME LEFT + LOGOUT RIGHT
+        
+        let topRightStack = UIStackView(arrangedSubviews: [timeStack, logOutButton])
+        topRightStack.axis = .horizontal
+        topRightStack.spacing = 5
+        topRightStack.distribution = .fill
+        topRightStack.alignment = .center
+        topRightStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+  
+        // MARK: - CATEGORY STACK
+
+        let categoryLabel = UILabel()
+        categoryLabel.text = "Category:"
+        categoryLabel.font = .boldSystemFont(ofSize: 16)
+
+        let categoryTypeLabel = UILabel()
+        categoryTypeLabel.text = categoryName
+        categoryTypeLabel.font = .systemFont(ofSize: 16)
+
+        let categoryStack = UIStackView(arrangedSubviews: [
+            categoryLabel,
+            categoryTypeLabel
+        ])
+        categoryStack.axis = .vertical
+        categoryStack.spacing = 6
+        categoryStack.alignment = .leading
+        categoryStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+       
+        //MARK: -  RIGHT STACK (top + category)
+    
+        let rightStack = UIStackView(arrangedSubviews: [
+            topRightStack,
+            categoryStack
+        ])
+        rightStack.axis = .vertical
+        rightStack.spacing = 10
+        rightStack.alignment = .leading
+        rightStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+    
+        //MARK: -  MAIN TOP ROW: LEFT + RIGHT
+       
+        let topStack = UIStackView(arrangedSubviews: [
+            logoImage,
+            rightStack
+        ])
+        topStack.axis = .horizontal
+        topStack.spacing = 16
+        topStack.alignment = .top
+        topStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+       
+        // MARK: - STARTING LINE (OUTSIDE ABOVE STACK)
+        
         let startingLineLabel = UILabel()
         startingLineLabel.text = "Starting Line:"
-        startingLineLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        startingLineLabel.font = .boldSystemFont(ofSize: 16)
 
-        let startingLineDisplay = UILabel()
+        let startingLineDisplay = UITextView()
         startingLineDisplay.text = storyFirstLine
-        startingLineDisplay.numberOfLines = 0
-        startingLineDisplay.font = UIFont.systemFont(ofSize: 16)
+        startingLineDisplay.font = .systemFont(ofSize: 14)
+        startingLineDisplay.isEditable = false
+        startingLineDisplay.isScrollEnabled = false
+        startingLineDisplay.backgroundColor = .clear
+        startingLineDisplay.translatesAutoresizingMaskIntoConstraints = true
 
-        let startingLineStack = UIStackView(arrangedSubviews: [startingLineLabel, startingLineDisplay])
+        // FIX: Remove internal padding
+        startingLineDisplay.textContainerInset = .zero
+        startingLineDisplay.textContainer.lineFragmentPadding = 0
+
+        // FIX: Allow expansion in stack view
+        startingLineDisplay.setContentHuggingPriority(.required, for: .vertical)
+        startingLineDisplay.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        let startingLineStack = UIStackView(arrangedSubviews: [
+            startingLineLabel,
+            startingLineDisplay
+        ])
         startingLineStack.axis = .vertical
         startingLineStack.spacing = 4
         startingLineStack.alignment = .leading
+        startingLineStack.translatesAutoresizingMaskIntoConstraints = false
 
-        // -----------------------------
-        // MAIN STACK (VERTICAL)
-        // -----------------------------
-        let mainStack = UIStackView(arrangedSubviews: [logoAndInfoStack, startingLineStack])
+        
+        
+     
+        //MARK: FINAL MAIN STACK
+        
+        let mainStack = UIStackView(arrangedSubviews: [
+            topStack,
+            startingLineStack
+        ])
         mainStack.axis = .vertical
-        mainStack.spacing = 16
+        mainStack.spacing = 5
         mainStack.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        
         headerView.addSubview(mainStack)
 
         NSLayoutConstraint.activate([
@@ -183,16 +376,17 @@ class GamePageTableViewController: UITableViewController {
         return headerView
     }
 
+
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 220
+        return 250
     }
 
     // MARK: - TableView Footer
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let footerView = UIView()
-        footerView.backgroundColor = UIColor.systemGray6
+        footerView.backgroundColor = UIColor(hex:"8CD4E6")
         
         // Input Field
         inputField = UITextField()
@@ -202,9 +396,11 @@ class GamePageTableViewController: UITableViewController {
         
         // Send Button
         sendButton = UIButton(type: .system)
-        sendButton.setTitle("Send", for: .normal)
+        sendButton.setImage(UIImage(named: "Send"), for: .normal)
+        sendButton.tintColor = .systemBlue      // optional (affects SF Symbols)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
+
         
         let inputStack = UIStackView(arrangedSubviews: [inputField, sendButton])
         inputStack.axis = .horizontal
@@ -215,10 +411,19 @@ class GamePageTableViewController: UITableViewController {
         // Complete Story Button
         completeStoryButton = UIButton(type: .system)
         completeStoryButton.setTitle("Complete Story", for: .normal)
-        completeStoryButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        completeStoryButton.translatesAutoresizingMaskIntoConstraints = false
+        completeStoryButton.setTitleColor(.white, for: .normal)
+        completeStoryButton.backgroundColor = UIColor(hex: "#1877F2")   // Facebook Blue
+        completeStoryButton.layer.borderWidth = 1
+        completeStoryButton.layer.borderColor = UIColor.white.cgColor
+        completeStoryButton.layer.cornerRadius = 8
+        completeStoryButton.clipsToBounds = true
         completeStoryButton.addTarget(self, action: #selector(completeTask), for: .touchUpInside)
         
+        NSLayoutConstraint.activate([
+            completeStoryButton.widthAnchor.constraint(equalToConstant: 200),
+            completeStoryButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
         let stack = UIStackView(arrangedSubviews: [inputStack, completeStoryButton])
         stack.axis = .vertical
         stack.spacing = 12
@@ -244,19 +449,19 @@ class GamePageTableViewController: UITableViewController {
 
     // MARK: - TableView Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return userStoryParts.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TestingTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GamePageTableViewCell", for: indexPath)
         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         
-        let msg = messages[indexPath.row]
+        let msg = userStoryParts[indexPath.row]
 
         // Sender Label
         let senderLabel = UILabel()
-        senderLabel.text = msg.sender
+        senderLabel.text = msg.participantName
         senderLabel.font = UIFont.boldSystemFont(ofSize: 15)
 
         // Message Label
@@ -282,23 +487,7 @@ class GamePageTableViewController: UITableViewController {
         return cell
     }
 
-    // MARK: - Button Actions
-    @objc func sendMessage() {
-        guard let text = inputField.text, !text.isEmpty else { return }
-        messages.append(Message(sender: "You", text: text))
-        inputField.text = ""
-        tableView.reloadData()
-    }
-    
-    @objc func completeTask() {
-        // Disable input/buttons
-        inputField.isEnabled = false
-        sendButton.isEnabled = false
-        completeStoryButton.isEnabled = false
-        
-        // Navigate
-        performSegue(withIdentifier: "goToMoralPage", sender: self)
-    }
+
 
 }
 extension CategoryList {

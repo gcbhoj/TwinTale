@@ -6,25 +6,22 @@
 //
 
 import UIKit
+import CoreData
 
 class MoralEntryPageTableViewController: UITableViewController {
     
-    // MARK: - Message Model
-    struct Message {
-        let sender: String
-        let text: String
-    }
-
-    var messages: [Message] = [
-        Message(sender: "You", text: "True friends stay by your side when you need them most."),
-        Message(sender: "Friend", text: "Absolutely! That's what friends are for."),
-        Message(sender: "Jack", text: "Hello, how are you?")
-    ]
+    //MARK: CurrentGameData
+    var gameData: GameData?
+    var categoryName: String?
+    var loggedInUser: NewUser?
+    
+    var userEnteredMorals:[MoralPart] = []
+    
     
     // MARK: - Timer
     var timerLabel: UITextField!
     var countdownTimer: Timer?
-    var remainingSeconds = 60   // 1 minute for one hout use 60*60
+    var remainingSeconds = 24*60*60   // 1 minute for one hout use 60*60
 
     // MARK: - Footer References
     var inputField: UITextField!
@@ -35,11 +32,48 @@ class MoralEntryPageTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let game = gameData else {
+            print("ERROR: gameData is nil when loading MoralEntryPage.")
+            return
+        }
+        
+        userEnteredMorals = fetchMoralParts(for: game)
+        
+        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestingTableViewCell")
         tableView.separatorStyle = .none
         startTimer()
     }
+    
+    //MARK: -  CORE DATA CONTEXT
 
+    func persistentContext() -> NSManagedObjectContext {
+        return (UIApplication.shared.delegate as! AppDelegate)
+            .persistentContainer.viewContext
+    }
+    
+    //MARK: - log out Button Action
+    @objc func loggingOutUser(){
+        logOutUser()
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
+    
+    //MARK: - Logging A user OUt
+    func logOutUser (){
+        loggedInUser = nil
+    }
+    //MARK: Get all morals from coredata
+    
+    func fetchMoralParts(for game: GameData) -> [MoralPart] {
+        let ctx = persistentContext()
+        let req: NSFetchRequest<MoralPart> = MoralPart.fetchRequest()
+        req.predicate = NSPredicate(format: "gameData == %@", game)
+        req.sortDescriptors = [NSSortDescriptor(key: "order", ascending: true)]
+        do { return try ctx.fetch(req) } catch { print(error); return [] }
+    }
+    
+    
     // MARK: - Timer Functions
     func startTimer() {
         countdownTimer = Timer.scheduledTimer(timeInterval: 1.0,
@@ -79,63 +113,129 @@ class MoralEntryPageTableViewController: UITableViewController {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.systemGray6
 
-        // Logo
+        // MARK: - LEFT: LOGO
+   
         let logoImage = UIImageView(image: UIImage(named: "logo"))
         logoImage.contentMode = .scaleAspectFit
-        logoImage.widthAnchor.constraint(equalToConstant: 141).isActive = true
-        logoImage.heightAnchor.constraint(equalToConstant: 126).isActive = true
+        logoImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            logoImage.widthAnchor.constraint(equalToConstant: 140),
+            logoImage.heightAnchor.constraint(equalToConstant: 120)
+        ])
+        
+        
 
-        // Category
-        let moralGuessLabel = UILabel()
-        moralGuessLabel.text = "Moral Guess Reward 50,000"
-        moralGuessLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        
-        let categoryLabel = UILabel()
-        categoryLabel.text = "Category"
-        categoryLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        
-        let categoryTypeLabel = UITextField()
-        categoryTypeLabel.text = "Friendship"
-        categoryTypeLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        
-        let categoryStack = UIStackView(arrangedSubviews: [categoryLabel, categoryTypeLabel])
-        categoryStack.axis = .horizontal
-        categoryStack.distribution = .equalSpacing
-        
-        let topStack = UIStackView(arrangedSubviews: [moralGuessLabel,categoryStack])
-        topStack.axis = .vertical
-        topStack.distribution = .equalSpacing
-        
-        // Time Left
+        // MARK: - TIME STACK
+
         let timeLabel = UILabel()
-        timeLabel.text = "Time Left"
-        timeLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        
+        timeLabel.text = "Time Left:"
+        timeLabel.font = .boldSystemFont(ofSize: 12)
+
         timerLabel = UITextField()
         timerLabel.text = formatTime(remainingSeconds)
-        timerLabel.font = UIFont.systemFont(ofSize: 16)
+        timerLabel.font = .systemFont(ofSize: 12)
+        timerLabel.borderStyle = .roundedRect
+        timerLabel.translatesAutoresizingMaskIntoConstraints = false
+        timerLabel.isUserInteractionEnabled = false
         
         let timeStack = UIStackView(arrangedSubviews: [timeLabel, timerLabel])
         timeStack.axis = .horizontal
-        timeStack.distribution = .equalSpacing
+        timeStack.spacing = 3
+        timeStack.alignment = .center
+        timeStack.translatesAutoresizingMaskIntoConstraints = false
         
-        let textStack = UIStackView(arrangedSubviews: [topStack, timeStack])
-        textStack.axis = .vertical
-        textStack.distribution = .equalSpacing
         
-        let mainStack = UIStackView(arrangedSubviews: [logoImage, textStack])
-        mainStack.axis = .horizontal
-        mainStack.distribution = .equalSpacing
-        mainStack.alignment = .center
-        mainStack.translatesAutoresizingMaskIntoConstraints = false
+
+        //MARK: -  LOGOUT BUTTON
+
+        let logOutButton = UIButton(type: .system)
+        logOutButton.setTitle("Logout", for: .normal)
+        logOutButton.titleLabel?.font = .systemFont(ofSize: 12)
+        logOutButton.setTitleColor(.white, for: .normal)
+        logOutButton.backgroundColor = .systemGray
+        logOutButton.layer.cornerRadius = 6
+        logOutButton.clipsToBounds = true
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
         
-        headerView.addSubview(mainStack)
+        logOutButton.addTarget(self,
+                               action: #selector(loggingOutUser),
+                               for: .touchUpInside)
 
         NSLayoutConstraint.activate([
-            mainStack.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
-            mainStack.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
-            mainStack.topAnchor.constraint(equalTo: headerView.topAnchor),
-            mainStack.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+            logOutButton.heightAnchor.constraint(equalToConstant: 30),
+            logOutButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 80)
+        ])
+        
+        
+       
+        //MARK: - TOP RIGHT ROW: TIME LEFT + LOGOUT RIGHT
+        
+        let topRightStack = UIStackView(arrangedSubviews: [timeStack, logOutButton])
+        topRightStack.axis = .horizontal
+        topRightStack.spacing = 5
+        topRightStack.distribution = .fill
+        topRightStack.alignment = .center
+        topRightStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+  
+        // MARK: - CATEGORY STACK
+
+        let categoryLabel = UILabel()
+        categoryLabel.text = "Category:"
+        categoryLabel.font = .boldSystemFont(ofSize: 16)
+
+        let categoryTypeLabel = UILabel()
+        categoryTypeLabel.text = categoryName
+        categoryTypeLabel.font = .systemFont(ofSize: 16)
+
+        let categoryStack = UIStackView(arrangedSubviews: [
+            categoryLabel,
+            categoryTypeLabel
+        ])
+        categoryStack.axis = .vertical
+        categoryStack.spacing = 6
+        categoryStack.alignment = .leading
+        categoryStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        let moralGuessLabel = UILabel()
+        moralGuessLabel.text = "Moral Guess Reward 50,000"
+        moralGuessLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        
+       
+        //MARK: -  RIGHT STACK (top + category)
+    
+        let rightStack = UIStackView(arrangedSubviews: [
+            moralGuessLabel,
+            topRightStack,
+            categoryStack
+        ])
+        rightStack.axis = .vertical
+        rightStack.spacing = 10
+        rightStack.alignment = .leading
+        rightStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+    
+        //MARK: -  MAIN TOP ROW: LEFT + RIGHT
+       
+        let topStack = UIStackView(arrangedSubviews: [
+            logoImage,
+            rightStack
+        ])
+        topStack.axis = .horizontal
+        topStack.spacing = 16
+        topStack.alignment = .top
+        topStack.translatesAutoresizingMaskIntoConstraints = false
+
+       headerView.addSubview(topStack)
+
+        NSLayoutConstraint.activate([
+            headerView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            headerView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            headerView.topAnchor.constraint(equalTo: headerView.topAnchor),
+            headerView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
         ])
 
         return headerView
@@ -195,7 +295,7 @@ class MoralEntryPageTableViewController: UITableViewController {
 
     // MARK: - TableView Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return userEnteredMorals.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -203,11 +303,12 @@ class MoralEntryPageTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TestingTableViewCell", for: indexPath)
         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         
-        let msg = messages[indexPath.row]
+        let msg = userEnteredMorals[indexPath.row]
 
         // Sender Label
         let senderLabel = UILabel()
-        senderLabel.text = msg.sender
+        
+        senderLabel.text = msg.participantName
         senderLabel.font = UIFont.boldSystemFont(ofSize: 15)
 
         // Message Label
@@ -235,10 +336,7 @@ class MoralEntryPageTableViewController: UITableViewController {
 
     // MARK: - Button Actions
     @objc func sendMessage() {
-        guard let text = inputField.text, !text.isEmpty else { return }
-        messages.append(Message(sender: "You", text: text))
-        inputField.text = ""
-        tableView.reloadData()
+
     }
     
     @objc func completeTask() {

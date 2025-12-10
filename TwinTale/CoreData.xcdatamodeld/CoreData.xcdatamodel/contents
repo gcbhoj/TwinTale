@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="23G80" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="GameData" representedClassName="GameData" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="gameDataId" optional="YES" attributeType="String"/>
+        <attribute name="isMoralComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isStoryComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="moralParts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MoralPart" inverseName="gameData" inverseEntity="MoralPart"/>
+        <relationship name="story" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoryList"/>
+        <relationship name="storyParts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="StoryPart" inverseName="gameData" inverseEntity="StoryPart"/>
+    </entity>
+    <entity name="MoralPart" representedClassName="MoralPart" syncable="YES" codeGenerationType="class">
+        <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="participantId" optional="YES" attributeType="String"/>
+        <attribute name="participantName" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="gameData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="moralParts" inverseEntity="GameData"/>
+    </entity>
     <entity name="NewUser" representedClassName="NewUser" syncable="YES" codeGenerationType="class">
         <attribute name="password" optional="YES" attributeType="String"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String"/>
@@ -13,5 +29,12 @@
         <attribute name="storyId" optional="YES" attributeType="String"/>
         <attribute name="storyMoral" optional="YES" attributeType="String"/>
         <attribute name="storyTitle" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="StoryPart" representedClassName="StoryPart" syncable="YES" codeGenerationType="class">
+        <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="participantId" optional="YES" attributeType="String"/>
+        <attribute name="participantName" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <relationship name="gameData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameData" inverseName="storyParts" inverseEntity="GameData"/>
     </entity>
 </model>

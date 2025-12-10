@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="t5l-PN-dZq">
-                                <rect key="frame" x="0.0" y="103" width="141" height="126"/>
+                                <rect key="frame" x="0.0" y="59" width="141" height="170"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="a5U-H1-qdH"/>
@@ -95,7 +95,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lXf-Kt-u4U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2402" y="274"/>
+            <point key="canvasLocation" x="-2415" y="274"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fkO-gf-aIy">
@@ -145,35 +145,6 @@
             </objects>
             <point key="canvasLocation" x="-411" y="264"/>
         </scene>
-        <!--Testing Table View Controller-->
-        <scene sceneID="jRr-0T-HZE">
-            <objects>
-                <tableViewController id="sj9-8w-hYe" customClass="TestingTableViewController" customModule="TwinTale" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="mE0-wS-aXu">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TestingTableViewCell" id="wGz-Bb-OEO" customClass="TestingTableViewCell" customModule="TwinTale" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wGz-Bb-OEO" id="ETX-WV-HcG">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="sj9-8w-hYe" id="gak-id-Nf6"/>
-                            <outlet property="delegate" destination="sj9-8w-hYe" id="Ryw-N7-h8W"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="VUd-tB-PZn"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ci7-3x-cE4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="839" y="299"/>
-        </scene>
         <!--Game Page Table View Controller-->
         <scene sceneID="w2M-7n-nr7">
             <objects>
@@ -205,7 +176,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4hc-QX-bvd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1404" y="-708"/>
+            <point key="canvasLocation" x="-1808" y="-785"/>
         </scene>
         <!--Moral Entry Page Table View Controller-->
         <scene sceneID="4Gy-C8-8Sc">
@@ -237,7 +208,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwV-Ty-VsP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1127" y="-620"/>
+            <point key="canvasLocation" x="-750" y="-785"/>
         </scene>
         <!--Home Controller-->
         <scene sceneID="Kcb-DY-jbB">
@@ -677,6 +648,7 @@ The two friends sat together and shared what was left of the sandwich,  laughi
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fai-9G-MV4" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vKj-hq-eNn">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -697,6 +669,7 @@ The two friends sat together and shared what was left of the sandwich,  laughi
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7eU-Zo-hzh">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

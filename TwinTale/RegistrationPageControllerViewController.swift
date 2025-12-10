@@ -11,9 +11,9 @@ import CryptoKit
 
 class RegistrationPageControllerViewController: UIViewController {
     
-    // --------------------------------------------------
-    // UI ELEMENTS
-    // --------------------------------------------------
+  
+    //MARK:  UI ELEMENTS
+  
     let logoImageView = UIImageView()
     let headerView = UILabel()
     let nameField = UITextField()
@@ -114,6 +114,9 @@ class RegistrationPageControllerViewController: UIViewController {
             $0.borderStyle = .roundedRect
             $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
         }
+        
+        passwordField.isSecureTextEntry = true
+        confirmPasswordField.isSecureTextEntry = true
         
         
         // --------------------------
@@ -224,9 +227,9 @@ class RegistrationPageControllerViewController: UIViewController {
     
     
     
-    // --------------------------------------------------
-    // VERIFY USER INPUT
-    // --------------------------------------------------
+
+    // MARK: - VERIFY USER INPUT
+   
     func verifyUserInput(
         user_Name: String?,
         userEmail: String?,

@@ -26,6 +26,7 @@ class HomeController: UIViewController {
     // header view
     let logoImageView = UIImageView()
     let headerView = UILabel()
+    let logOutButton = UIButton()
     
     //favorites
     let favoritesHeaderView = UILabel()
@@ -45,6 +46,7 @@ class HomeController: UIViewController {
     
     var loggedInUser: NewUser?
     var currentStory: StoryList?
+    var currentGame:GameData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +70,8 @@ class HomeController: UIViewController {
             if let story = currentStory {
                 vc.categoryId = story.categoryId
                 vc.story = story
+                vc.gameData = currentGame
+                vc.loggedInUser = loggedInUser
                 
                 // First line
                 vc.storyFirstLine = firstLine(from: story.storyContent)
@@ -79,37 +83,104 @@ class HomeController: UIViewController {
             }
         }
     }
+    
+    //MARK: - log out Button Action
+    @objc func loggingOutUser(){
+        logOutUser()
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
 
     
-    // --------------------------------------------------
-    // CORE DATA CONTEXT
-    // --------------------------------------------------
+    
+    //MARK: - Logging A user OUt
+    func logOutUser (){
+        loggedInUser = nil
+    }
+    
+    //MARK: - Function to go to game page
+    @objc func categoryButtonTapped(_ sender: UIButton) {
+            let id = Int64(sender.tag)
+
+            guard CategoryList(rawValue: id) != nil else {
+                print("Invalid Category ID")
+                return
+            }
+
+            guard let story = retrieveRandomStory(by: id) else {
+                print("ERROR: No story found for category \(id)")
+                return
+            }
+
+            currentStory = story
+            
+            // create game entry
+            currentGame = createGameData(for: story)
+
+            if let gameId = currentGame?.gameDataId {
+                print("Created Game ID:", gameId)
+            }
+
+            performSegue(withIdentifier: "GoToGamePage", sender: self)
+        }
+    
+    //MARK: -  CORE DATA CONTEXT
     func persistentContext() -> NSManagedObjectContext {
         return (UIApplication.shared.delegate as! AppDelegate)
             .persistentContainer.viewContext
     }
     
-    //MARK:- Function to go to game page
-       @objc func categoryButtonTapped(_ sender: UIButton) {
-           let id = Int64(sender.tag)
-
-           guard CategoryList(rawValue: id) != nil else {
-               print("Invalid Category ID")
-               return
-           }
-           
-           currentStory = retrieveRandomStory(by: id)
-           
-           
-
-           
-           performSegue(withIdentifier: "GoToGamePage", sender: self)
-           
-           
-
-       }
+    //MARK: - Function to check Existing Game
+    func fetchIncompleteGame(for story: StoryList) -> GameData? {
+        let context = persistentContext()
+        
+        let request: NSFetchRequest<GameData> = GameData.fetchRequest()
+        request.predicate = NSPredicate(format: "story == %@ AND isStoryComplete == NO AND isMoralComplete == NO" , story)
+        request.fetchLimit = 1
+        
+        do {
+            let result = try context.fetch(request)
+            return result.first
+        } catch {
+            print("Error fetching incomplete game:", error)
+            return nil
+        }
+    }
     
-    //MARK:- Function to extract the first line from the story
+    
+    //MARK:  FUNCTION TO CREATE A NEW GAME DATA
+    func createGameData(for story: StoryList)-> GameData {
+        
+        if let existingGame = fetchIncompleteGame(for: story) {
+            print("Returning existing incomplete game:", existingGame.gameDataId ?? "N/A")
+            return existingGame
+        }
+        
+        let context = persistentContext()
+        let game = GameData(context: context)
+        game.gameDataId = generateGameId()
+        game.createdDate = Date()
+        game.story = story
+        game.isStoryComplete = false
+        game.isMoralComplete = false
+        
+        do{
+            try context.save()
+        }catch{
+            print("Game Data Createion error: ", error)
+        }
+        
+        return game
+        
+    }
+    
+    //MARK: - GENERATE UNIQUE ID FOR GAMEID
+    func generateGameId() -> String {
+        return "GD\(Int.random(in: 1000...9999))"
+    }
+
+    
+    //MARK: - Function to extract the first line from the story
     
     func firstLine(from text: String?) -> String {
         guard let text = text else { return "" }
@@ -119,7 +190,7 @@ class HomeController: UIViewController {
             .first(where: { !$0.trimmingCharacters(in: .whitespaces).isEmpty }) ?? ""
     }
 
-    //Mark:- Retreive One Story from dB by categoryId
+    //MARK: - Retreive One Story from dB by categoryId
     
     func retrieveRandomStory(by categoryId: Int64) -> StoryList? {
         
@@ -136,10 +207,8 @@ class HomeController: UIViewController {
             return nil
         }
     }
-
-    
        
-       //MARK:- Function to check if the story exists by story id
+       //MARK: - Function to check if the story exists by story id
        
        func storyExists(id: String) -> Bool {
            
@@ -155,13 +224,13 @@ class HomeController: UIViewController {
            }
        }
    
-    //MARK:- UI Setup
+    //MARK: - UI Setup
     
     func setUpUI() {
 
-        // ---------------------------------------------------
-        // SCROLL VIEW SETUP
-        // ---------------------------------------------------
+        
+        //MARK:  SCROLL VIEW SETUP
+      
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
@@ -185,44 +254,86 @@ class HomeController: UIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
 
-        // ---------------------------------------------------
-        // LOGO
-        // ---------------------------------------------------
+
+        //MARK:  LOGO
+       
         logoImageView.image = UIImage(named: "logo")
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.widthAnchor.constraint(equalToConstant: 140).isActive = true
         logoImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
 
-        // ---------------------------------------------------
-        // HEADER TEXT
-        // ---------------------------------------------------
+ 
+        // MARK: HEADER TEXT
+
         headerView.text = "Select Category"
         headerView.font = .systemFont(ofSize: 22, weight: .bold)
         headerView.textAlignment = .center
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        headerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        headerView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        
+        //MARK: Logout Button
+        logOutButton.setTitle("Logout", for: .normal)
+        logOutButton.titleLabel?.font = .systemFont(ofSize: 14)
+        logOutButton.setTitleColor(.white, for: .normal)
+        logOutButton.backgroundColor = .systemGray
+        logOutButton.layer.cornerRadius = 6
+        logOutButton.clipsToBounds = true
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
+        
 
+        logOutButton.addTarget(self,
+                               action: #selector(loggingOutUser),
+                               for: .touchUpInside)
+        logOutButton.setContentHuggingPriority(.required, for: .horizontal)
+        logOutButton.setContentHuggingPriority(.required, for: .horizontal)
+        logOutButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        NSLayoutConstraint.activate([
+            logOutButton.heightAnchor.constraint(equalToConstant: 30),
+            logOutButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 80)
+        ])
+        
+        let categoryHeaderStack = UIStackView(arrangedSubviews:[
+            logOutButton,
+            headerView]
+        )
+        categoryHeaderStack.axis = .vertical
+        categoryHeaderStack.spacing = 12
+        categoryHeaderStack.alignment = .center
+        categoryHeaderStack.translatesAutoresizingMaskIntoConstraints = false
+        
         let headerStack = UIStackView(arrangedSubviews: [
             logoImageView,
-            headerView
+            categoryHeaderStack
+
         ])
+
         headerStack.axis = .horizontal
         headerStack.spacing = 12
         headerStack.alignment = .center
         headerStack.translatesAutoresizingMaskIntoConstraints = false
+
+        headerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        logOutButton.setContentHuggingPriority(.required, for: .horizontal)
 
         contentView.addSubview(headerStack)
 
         NSLayoutConstraint.activate([
             headerStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             headerStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            headerStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            headerStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
+            logOutButton.heightAnchor.constraint(equalToConstant: 30),
+            logOutButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 80)
         ])
 
-        // ---------------------------------------------------
-        // FAVORITES SECTION
-        // ---------------------------------------------------
+       
+        //MARK:  FAVORITES SECTION
+       
         favoritesHeaderView.text = "Favorites"
         favoritesHeaderView.font = .systemFont(ofSize: 22, weight: .bold)
         favoritesHeaderView.textAlignment = .left
@@ -268,9 +379,9 @@ class HomeController: UIViewController {
             favoritesContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
 
-        // ---------------------------------------------------
-        // CATEGORIES SECTION
-        // ---------------------------------------------------
+   
+        // MARK: CATEGORIES SECTION
+     
         categoriesHeaderView.text = "Categories"
         categoriesHeaderView.font = .systemFont(ofSize: 22, weight: .bold)
 
@@ -361,14 +472,14 @@ class HomeController: UIViewController {
         }
     }
 
-    // MARK:- Add Initial Data
+    // MARK: - Add Initial Data
     
 
     func setUpInitialData() {
         
         let context = persistentContext()
     
-        // STORIES TO INSERT
+        //MARK: STORIES TO INSERT
     
         
         let stories: [(id: String,
@@ -438,7 +549,7 @@ class HomeController: UIViewController {
         ]
         
     
-        // INSERT STORIES ONLY ONCE
+        //MARK: INSERT STORIES ONLY ONCE
     
         
         for story in stories {
@@ -457,7 +568,7 @@ class HomeController: UIViewController {
         }
         
         
-        // SAVE
+        //MARK: SAVE
         
         
         do {
@@ -467,16 +578,7 @@ class HomeController: UIViewController {
             print("Error saving initial data:", error)
         }
     }
-    // MARK:- REMOVE THIS CONTENT BRFORE DOING anything
-    
-    func removethis(){
-        
-    }
-
-
-
-    
-        
+      
 
 
 }
