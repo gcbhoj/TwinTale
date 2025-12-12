@@ -169,8 +169,18 @@ class MoralEntryPageTableViewController: UITableViewController {
         tableView.reloadData()
 
         // SCROLL TO BOTTOM
-        let lastIndex = IndexPath(row: userEnteredMorals.count - 1, section: 0)
-        tableView.scrollToRow(at: lastIndex, at: .bottom, animated: true)
+        // SCROLL TO BOTTOM
+        DispatchQueue.main.async {
+            
+            guard self.userEnteredMorals.count > 0 else { return }
+            
+            let lastIndex = IndexPath(row: self.userEnteredMorals.count - 1,
+                                      section: 0)
+
+            self.tableView.scrollToRow(at: lastIndex,
+                                       at: .bottom,
+                                       animated: true)
+        }
     }
     
     @objc func completeTask() {
